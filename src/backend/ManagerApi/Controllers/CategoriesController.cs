@@ -42,6 +42,13 @@ namespace ManagerApi.Controllers
             return category;
         }
 
+        // GET: 
+        [HttpGet("OnTopLevel")]
+        public async Task<ActionResult<IEnumerable<Category>>> OnTopLevel()
+        {
+            return await _context.Categories.Where(c => c.ParentCategoryId == 0).ToListAsync();
+        }
+
         // PUT: api/Categories/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -80,6 +87,22 @@ namespace ManagerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCategory", new { id = category.CategoryId }, category);
+        }
+
+        [HttpGet("WithoutParent")]
+        public async Task<ActionResult<Category>> PostCategoryWithoutParent()
+        {
+            var category = new Category();
+            category.CategoryId = 1;
+            category.Description = "test";
+            category.Name = "testname";
+            category.ParentCategoryId = 0;
+            category.PointOfOperationId = 0;
+            
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
