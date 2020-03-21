@@ -20,5 +20,6 @@ From changing sheets to swapping infusions. When an overwhelming amount of peopl
 - Jack: C#, ein wenig ASP .Net Core und Angular, WPF, Xamarin
 - Marcel L: C# (.NET, .NET Core), Java (plain), Angular (leider viel zu selten gemacht), Javascript, PHP
 - Johannes S: JavaScript, VueJS, React (länger nicht verwendet), PHP, Go
+- Daniel O: Spring Boot, Express,  React/Angular, SQL/NoSQL, OAS,Docker
 
 ## Technik
