@@ -1,0 +1,18 @@
+.sidebar {
+    padding: 20px;
+    border-right: 2px solid #b1b1b1;
+}
+
+.sidebar__title {
+    font-family: 'Fredoka One', serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.sidebar__error {
+    padding: 20px;
+    color: #fff;
+    background-color: lightcoral;
+    border: 1px solid red;
+}
