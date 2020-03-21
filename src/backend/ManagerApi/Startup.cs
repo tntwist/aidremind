@@ -37,6 +37,8 @@ namespace ManagerApi
 
                 options.UseSqlite($"Data Source={dbPath}");
             });
+
+            services.AddOpenApiDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +50,9 @@ namespace ManagerApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseHttpsRedirection();
 
