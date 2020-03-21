@@ -58,5 +58,10 @@ namespace EFRepo.Entities
 
         [InverseProperty(nameof(Subscription.Task))]
         public ICollection<Subscription> Subscriptions { get; set; }
+
+        /// <summary>
+        /// Amount of subscribers
+        /// </summary>
+        public int AmountOfSubscribers { get; set; }
     }
 }
