@@ -23,9 +23,16 @@ namespace ClerkApi.Controllers
 
         // GET: api/Subscriptions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Subscription>>> GetSubscriptions()
+        public async Task<ActionResult<IEnumerable<Subscription>>> GetSubscriptions([FromQuery] int userId)
         {
-            return await _context.Subscriptions.ToListAsync();
+            var subscriptionsQuery = _context.Subscriptions.AsQueryable();
+
+            if (userId > 0)
+            {
+                subscriptionsQuery = subscriptionsQuery.Where(t => t.UserId == userId);
+            }
+
+            return await subscriptionsQuery.ToListAsync();
         }
 
         // GET: api/Subscriptions/5
