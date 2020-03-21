@@ -41,5 +41,10 @@ namespace EFRepo.Entities
 
         [InverseProperty(nameof(Task.Category))]
         public ICollection<Task> Tasks { get; set; }
+
+        /// <summary>
+        /// The height of this item inside the tree of categories
+        /// </summary>
+        public int Height { get; set; }
     }
 }
