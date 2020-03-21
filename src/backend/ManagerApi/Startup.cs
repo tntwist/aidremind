@@ -35,13 +35,15 @@ namespace ManagerApi
                 var dbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 var dbPath = Path.Combine(dbDirectory, "aidreminder.db");
 
-                options.UseSqlite(dbPath);
+                options.UseSqlite($"Data Source={dbPath}");
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AidRemindDbContext dbContext)
         {
+            dbContext.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
