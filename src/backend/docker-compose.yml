@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  clerkapi:
+    image: ${DOCKER_REGISTRY-}clerkapi
+    build:
+      context: .
+      dockerfile: ClerkApi/Dockerfile
+    ports:
+        - "9901:80"
+
+  managerapi:
+    image: ${DOCKER_REGISTRY-}managerapi
+    build:
+      context: .
+      dockerfile: ManagerApi/Dockerfile
+    ports:
+        - "9902:80"
+
