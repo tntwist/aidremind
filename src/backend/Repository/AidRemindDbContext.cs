@@ -6,7 +6,7 @@ namespace EFRepo
     /// <summary>
     /// Database context
     /// </summary>
-    class AidRemindDbContext : DbContext
+    public class AidRemindDbContext : DbContext
     {
         #region Ctor
         /// <summary>
