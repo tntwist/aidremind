@@ -38,7 +38,10 @@ namespace ClerkApi
                 options.UseSqlite($"Data Source={dbPath}");
             });
 
-            services.AddOpenApiDocument();
+            services.AddOpenApiDocument(options =>
+            {
+                options.Title = "Aidremind.ClerkApi";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
