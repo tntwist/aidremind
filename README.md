@@ -1,10 +1,23 @@
-## Optimierung der Krankenhausverwaltung rund um die  Abstriche für Covid19-Verdachtsfälle
+# ID 024_Reminder_Caremind
 
-# Problem
-Problem lässt sich unter diesem [Link](https://www.doccheck.com/de/detail/articles/25968-corona-alltag-im-prae-desaster-stadium?utm_source=www.doccheck.com&utm_medium=DC%2520Search&utm_campaign=DC%2520Search%2520content_type%253Aall&utm_content=DC%2520Search%2520corona%2520alltagDas) sehr gut nachvollziehen. Hier schildert ein Arzt, der Abstriche nimmt seinen Alltag. Für jeden Patienten von dem er den Abstrich genommen hat, muss er bis zu 5 verschiedene Formulare ausfüllen:1. Bogen für die Klinik, warum der Abstrich genommen wird.2. Überweisungsschein für das externe Labor3. Anforderungsschein für das selbe Labor (Was will der Arzt vom Labor und wann war der Abstrich).4. Meldezettel für das Gesundheitsamt5. Risikogebietszettel für die Hygieneabteilung und das GesundheitsamtDas sorgt für einen unheimlichen Verwaltungsoverhead, kostet Zeit und in dieser Zeit sitzt der potentiell infektiöse Patient noch neben dem Arzt.Auf alle diese Bögen muss natürlich das Datum des Abstrichs und die Patientendaten.
+## Problem
+No one wants to forget important tasks. But in times like these, we easily get distracted. Let's help to set up easy reminders in an environment everyone can use right away and with no installation needed.
 
-# Herausforderung
-Wie lässt sich der Vorgang von 4 bis 5 Zetteln, die ausgefüllt werden müssen, effizienter gestalten?
 
-# Lösungsansätze
-Zur Lösung dieses immensen Verwaltungs-Overheads wäre es praktisch, wenn man ein System, bspw. in Form eines Web Services zusammen mit entsprechenden Web Clients erstellt, welches diese 5 Bögen in einer Eingabemaske für den Arzt verbindet. Die Patientendaten sollten direkt von der Krankenkassenkarte übernommen werden. Einige Dinge lassen sich dann auch schon direkt vorausfüllen, sodass der Arzt nur noch sehr wenig selber ankreuzen und in hoffentlich wenige Freitextfelder eingeben muss (wofür eine optionale Diktierfunktion auch praktisch wäre).Diese Daten werden zentral gespeichert, sodass sowohl Klinik, behandelnder Arzt, Labor und Gesundheitsamt auf die für sie relevanten Daten Zugriff erhalten. (Lässt sich wahrscheinlich in Form verschiedener Views lösen).Der Bogen sollte dem ausgewählten Labor zur Verfügung stehen (dies lässt sich über eine ID lösen, um mit dem Abstrich zu vergleichen). Das Labor kann natürlich noch einen Haken setzen, ob der Patient positiv oder negativ getestet wurde.Das Gesundheitsamt sollte auch auf das System zugreifen können und die Hygieneabteilung, wenn der Patient aus einem Risikogebiet kam.Alle Ärzte sollen auf die Daten zugreifen können, sobald sie die Krankenkassenkarte physisch zur Verfügung hatten.NFR:1. Sicherheit in Form von Transportverschlüsselung, eventueller Datenverschlüsselung und Zugriffseinschränkungen. Außerdem müssen die verwendeten Betriebssysteme und Datenbanken auch ausreichend sicher sein.2. Skalierbarkeit: Es müssen ggf. große Datenmengen gespeichert werden.3. Performance: Das System muss auch mit vielen Anfragen in kurzer Zeit umgehen können.Der Web Service sollte unbedingt so geschrieben sein, dass er sich auch in bestehende Landschaften wie bspw. Orbis integrieren kann.
+## Herausforderung
+
+
+## Anforderungen
+Create your reminder. Set timer. Print. Hang. Let everyone scan and let them be reminded.
+
+From changing sheets to swapping infusions. When an overwhelming amount of people gets hospitalized, many hospitals' IT will face a lot of pressure. We want to remove some of this pressure by enabling every healthcare personnel to set useful reminders on their own devices.
+
+
+## Team / Skills
+
+- Nico: C#, Asp.Net Core, Angular, SQL/rel. DBs, Ionic
+- Jack: C#, ein wenig ASP .Net Core und Angular, WPF, Xamarin
+- Marcel L: C# (.NET, .NET Core), Java (plain), Angular (leider viel zu selten gemacht), Javascript, PHP
+
+## Technik
+
