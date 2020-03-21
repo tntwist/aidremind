@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using EFRepo;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace ManagerApi
 {
@@ -26,6 +29,14 @@ namespace ManagerApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<AidRemindDbContext>(options =>
+            {
+                var dbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                var dbPath = Path.Combine(dbDirectory, "aidreminder.db");
+
+                options.UseSqlite(dbPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
