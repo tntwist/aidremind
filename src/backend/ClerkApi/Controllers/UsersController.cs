@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace ClerkApi.Controllers
 {
-    public class UserController : AbstractBaseController
+    public class UsersController : AbstractBaseController
     {
-        public UserController()
+        public UsersController()
         {
         }
 
