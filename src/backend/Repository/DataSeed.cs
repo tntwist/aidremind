@@ -49,7 +49,6 @@ namespace EFRepo
                     PointOfOperationId = poo.PointOfOperationId,
                     Name = "Tent 1",
                     Description = "Test tent we build up in a hurry",
-                    ParentCategoryId = 0,
                     Height = 0,
                 },
                 //new Category
