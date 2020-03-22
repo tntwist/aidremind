@@ -31,10 +31,8 @@ public class TaskCreatedConsumer {
     }
 
     @Incoming("task-created")
-    public void scheduleTask(final Task task) throws JsonProcessingException, SchedulerException {
-
-        final String taskJson = this.objectMapper.writeValueAsString(task);
-
+    public void scheduleTask(final String taskJson) throws JsonProcessingException, SchedulerException {
+        final Task task = this.objectMapper.readValue(taskJson, Task.class);
         final String jobIdentity = task.getTaskId() + '_' + task.getTitle() + "_job";
         final JobDetail job = this.createJob(taskJson, jobIdentity);
 
