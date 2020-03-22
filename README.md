@@ -48,6 +48,9 @@ We reached out to various companies to talk about the implementation on their si
 - Raiko: Concept, Text, Ideation & Creation, PM, Recruiting
 - Daniel: Java, Node, Python, React/Angular, SQL/NoSQL, OAS, Docker
 
-
 ## Architecture
 ![Architecture](https://raw.githubusercontent.com/tntwist/aidremind/master/images/aidreminder-architecture.jpg)
+
+## Contact
+
+Email us! [aidremind@music2web.de](mailto:aidremind@music2web.de?subject=[GitHub]%20aidreminder)
