@@ -94,7 +94,7 @@ namespace EFRepo
                 CategoryId = c.CategoryId,
                 StartDate = DateTime.Now.AddHours(-1),
                 AmountOfSubscribers = 0,
-                Frequency = "30 * * * *",
+                Frequency = "0 0/30 * * *",
             };
 
             _ctx.Tasks.Add(task);
