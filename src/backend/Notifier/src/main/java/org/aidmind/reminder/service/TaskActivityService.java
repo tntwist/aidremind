@@ -5,21 +5,22 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.enterprise.context.Dependent;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 @RegisterRestClient
 @Dependent
 public interface TaskActivityService {
     @POST
-    @Produces("application/json")
-    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     TaskActivity create(TaskActivity taskActivity);
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     TaskActivity getById(@PathParam("taskActivityId") Integer taskActivityId);
 
     @PUT
-    @Produces("application/json")
-    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     TaskActivity update(@PathParam("taskActivityId") Integer taskActivityId, TaskActivity taskActivity);
 }
