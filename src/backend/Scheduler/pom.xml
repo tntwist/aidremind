@@ -53,6 +53,10 @@
       <artifactId>quarkus-smallrye-reactive-messaging</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.amqphub.quarkus</groupId>
+      <artifactId>quarkus-qpid-jms</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-quartz</artifactId>
     </dependency>
