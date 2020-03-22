@@ -4,9 +4,10 @@
   background-color: #f2f2f2;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 90px 1fr;
+  grid-template-rows: 90px auto 1fr;
   grid-template-areas: 
     'header header header header header header'
+    'error error error error error error'
     'sidebar sidebar content content content content';
 }
 
@@ -21,4 +22,8 @@
 .app__content {
   padding: 20px;
   grid-area: content;
+}
+
+.app__error {
+  grid-area: error;
 }

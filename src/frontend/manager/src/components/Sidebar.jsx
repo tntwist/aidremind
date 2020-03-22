@@ -8,25 +8,8 @@ import { generateTree } from '../services/utils';
 
 import './Sidebar.css'
 
-function Sidebar({ className = '' }) {
-  const [error, setError] = useState(null);
-  const [categoryTree, setCategoryTree] = useState(null);
+function Sidebar({ categoryTree, className = '' }) {
   const histroy = useHistory();
-
-  async function refreshCategories() {
-    try {
-      const categories = await CategoryApi.getAll();
-      console.log(categories);
-      const tree = generateTree(categories);
-      setCategoryTree(tree);
-    } catch (err) {
-      setError(err);
-    }
-  }
-
-  useEffect(() => {
-    refreshCategories();
-  }, []);
 
   function addNewCategory() {
     histroy.push('/category/add');
@@ -45,12 +28,9 @@ function Sidebar({ className = '' }) {
               Kategorie hinzufügen
             </Button>
         </div>
-            { error && (
-                <div className="sidebar__error">Error: {error.message}</div>
-            )}
-            { categoryTree && (
-                <CategoryList categoryTree={categoryTree}/>
-            )}
+        { categoryTree && (
+            <CategoryList categoryTree={categoryTree}/>
+        )}
     </div>
   );
 }

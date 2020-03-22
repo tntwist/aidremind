@@ -3,11 +3,12 @@ import './CategoryDefaultForm.css'
 import CategoryForm from '../components/CategoryForm';
 import { useHistory } from 'react-router-dom';
 
-export default function CategoryDefaultForm() {
+export default function CategoryDefaultForm({ onTriggerRefresh }) {
     const history = useHistory();
 
     function onCategorySaved(category) {
         history.push(`/category/${category.id}`);
+        onTriggerRefresh();
     }
 
     return (

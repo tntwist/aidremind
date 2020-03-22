@@ -46,7 +46,7 @@ function formatDate(date) {
     return format(new Date(date), 'dd.MM.yy HH:mm')
 }
 
-export default function CategoryView() {
+export default function CategoryView({ onTriggerRefresh }) {
     const { categoryId } = useParams();
     const [error, setError] = useState(null);
     const [category, setCategory] = useState(null);
@@ -62,7 +62,7 @@ export default function CategoryView() {
     }
     
     function onCategorySaved() {
-        console.log('Refresh categories list');
+        onTriggerRefresh();
 
         setActiveForm(null);
         setRefreshTrigger(new Date());
@@ -92,10 +92,6 @@ export default function CategoryView() {
         refreshTasks(categoryId);
     }, [categoryId, refreshTrigger]);
 
-    function editCategory() {
-        histroy.push(`/category/${category.id}/edit`);
-    }
-
     async function deleteTask(t) {
         try {
             await TaskApi.delete(t.id);
@@ -109,6 +105,7 @@ export default function CategoryView() {
         try {
             await CategoryApi.delete(categoryId);
             histroy.push(category.parentId ? `/category/${category.parentId}` : '/');
+            onTriggerRefresh();
         } catch (err) {
             setError(err);
         }
