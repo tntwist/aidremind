@@ -44,7 +44,7 @@ public class PushNotificationResource {
     }
 
     @Incoming("task-is-due")
-    public void notifySubscibers(Task task) throws JsonProcessingException {
+    public void notifySubscribers(Task task) throws JsonProcessingException {
         TaskActivity taskActivity = this.taskActivityService.create(new TaskActivity(null, task.getTaskId(), null));
         String taskActivityJson = objectMapper.writeValueAsString(taskActivity);
         List<Subscription> subscriptions = this.subscriptionService.getByTaskId(task.getTaskId());
