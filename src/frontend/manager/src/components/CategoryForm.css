@@ -1,0 +1,26 @@
+.category-form {
+    padding: 20px;
+}
+
+.category-form__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.category-form__title {
+    font-weight: bold;
+}
+
+.category-form__dates {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr;
+    gap: 25px;
+    align-items: center;
+}
+
+.category-form__footer {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 25px;
+}

@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Axios from 'axios';
+
+// Set defaults
+// TODO: use prosess.env.API_URL
+Axios.defaults.baseURL = 'http://localhost:3000/api';
 
 ReactDOM.render(
   <React.StrictMode>

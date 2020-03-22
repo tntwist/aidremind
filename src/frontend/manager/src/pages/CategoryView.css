@@ -1,0 +1,43 @@
+/* .category-view {} */
+
+.category-view__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.category-view__name {
+    margin: 0;
+}
+
+.category-view__description {
+    margin-top: 5px;
+    color: #555;
+}
+
+.category-view__table {
+    margin-top: 25px;
+}
+
+.category-view__actions {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
+
+.category-view__task-title {
+    font-weight: bold;
+}
+
+.category-view__task-description {
+    color: #b1b1b1;
+    font-size: 14px;
+}
+
+.category-view__main-actions {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 25px;
+}
