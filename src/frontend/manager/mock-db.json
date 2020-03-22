@@ -15,6 +15,50 @@
       "endDate": null,
       "frequency": "* */4 * * *",
       "id": 2
+    },
+    {
+      "title": "asd",
+      "description": "ad",
+      "startDate": "2020-03-25T18:30:00.000Z",
+      "endDate": null,
+      "frequency": null,
+      "id": 3
+    },
+    {
+      "categoryId": "2",
+      "title": "Test station 2",
+      "description": "",
+      "startDate": null,
+      "endDate": null,
+      "frequency": null,
+      "id": 4
+    },
+    {
+      "categoryId": "4",
+      "title": "Unteraufgabe von station 1.1",
+      "description": "",
+      "startDate": null,
+      "endDate": null,
+      "frequency": null,
+      "id": 5
+    },
+    {
+      "categoryId": "2",
+      "title": "Test station 2 asd",
+      "description": "",
+      "startDate": null,
+      "endDate": null,
+      "frequency": null,
+      "id": 6
+    },
+    {
+      "categoryId": "1",
+      "title": "Aufgabe für Station 1",
+      "description": "Dies ist eine Test",
+      "startDate": "2020-03-23T18:59:00.000Z",
+      "endDate": "2020-03-25T18:59:00.000Z",
+      "frequency": "* */1 * * *",
+      "id": 7
     }
   ],
   "categories": [

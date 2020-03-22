@@ -12,31 +12,14 @@ import {
 } from '@material-ui/pickers';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TaskApi from '../services/TaskApi';
+import { frequencyOptions } from '../services/utils';
 
-const frequencyOptions = [
-    { value: '*/10 * * * *', label: 'Alle 10min' },
-    { value: '*/15 * * * *', label: 'Alle 15min' },
-    { value: '*/30 * * * *', label: 'Alle 30min ' },
-    { value: '* */1 * * *', label: 'Jede volle Stunde' },
-    { value: '* */2 * * *', label: 'Alle 2 Stunden' },
-    { value: '* */3 * * *', label: 'Alle 3 Stunden' },
-    { value: '* */4 * * *', label: 'Alle 4 Stunden' },
-    { value: '* */8 * * *', label: 'Alle 8 Stunden' },
-    { value: '* * */1 * *', label: 'Jeden Tag' },
-    { value: '* * */2 * *', label: 'Alle 2 Tage' },
-    { value: '* * */3 * *', label: 'Alle 3 Tage' },
-    { value: '* * */4 * *', label: 'Alle 4 Tage' },
-    { value: '* * */5 * *', label: 'Alle 5 Tage' },
-    { value: '* * */6 * *', label: 'Alle 6 Tage' },
-    { value: '* * */7 * *', label: 'Alle 7 Tage' },
-];
-
-export default function TaskForm({ categoryId, onTaskCreated }) {
+export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
     const { register, handleSubmit, errors, reset } = useForm();
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [frequency, setFrequency] = useState(null);
-
+    
     async function onSubmit(data) {
         try {
             const newTask = {
@@ -53,6 +36,7 @@ export default function TaskForm({ categoryId, onTaskCreated }) {
             setStartDate(null);
             setEndDate(null);
             setFrequency(null);
+            onTaskCreated();
         } catch (err) {
             console.error(err);
         }
@@ -134,9 +118,12 @@ export default function TaskForm({ categoryId, onTaskCreated }) {
                     />
                 </div>
 
-                <div className="category-form__footer">
+                <div className="task-form__footer">
                     <Button variant="contained" color="primary" type="submit">
                         Hinzufügen
+                    </Button>
+                    <Button variant="outlined" color="default" onClick={onCloseForm}>
+                        Abbrechen
                     </Button>
                 </div>
             </form>

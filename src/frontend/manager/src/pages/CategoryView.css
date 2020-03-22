@@ -16,3 +16,22 @@
     margin-top: 5px;
     color: #555;
 }
+
+.category-view__table {
+    margin-top: 25px;
+}
+
+.category-view__actions {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
+
+.category-view__task-title {
+    font-weight: bold;
+}
+
+.category-view__task-description {
+    color: #b1b1b1;
+    font-size: 14px;
+}

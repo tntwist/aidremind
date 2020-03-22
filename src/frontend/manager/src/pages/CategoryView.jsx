@@ -5,16 +5,59 @@ import CategoryApi from '../services/CategoryApi';
 import Alert from '@material-ui/lab/Alert';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import TaskForm from '../components/TaskForm';
 import Paper from '@material-ui/core/Paper';
 import './CategoryView.css'
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TaskApi from '../services/TaskApi';
+import format from 'date-fns/format';
+import { getFrequencyLabel } from '../services/utils';
+import DeleteIcon from '@material-ui/icons/Delete';
 
+
+const StyledTableCell = withStyles(theme => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 16,
+    },
+  }))(TableCell);
+
+  const StyledTableRow = withStyles(theme => ({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.background.default,
+      },
+    },
+  }))(TableRow);
+
+function formatDate(date) {
+    if (!date) return null;
+    return format(new Date(date), 'dd.MM.yy HH:mm')
+}
 
 export default function CategoryView() {
     const { categoryId } = useParams();
     const [error, setError] = useState(null);
     const [category, setCategory] = useState(null);
     const histroy = useHistory();
+    const [showTaskForm, setShowTaskForm] = useState(null);
+    const [tasks, setTasks] = useState(null);
+    const [refreshTrigger, setRefreshTrigger] = useState(new Date());
+
+    function onTaskCreated() {
+        setShowTaskForm(false);
+        setRefreshTrigger(new Date());
+    }
 
     useEffect(() => {
         async function refreshCategory(id) {
@@ -26,11 +69,40 @@ export default function CategoryView() {
             }
         }
 
+        async function refreshTasks(categoryId) {
+            console.log('Refresh tasks');
+            try {
+                const result = await TaskApi.getAllByCategoryId(categoryId);
+                setTasks(result);
+            } catch (err) {
+                setError(err);
+            }
+        }
+
         refreshCategory(categoryId);
-    }, [categoryId]);
+        refreshTasks(categoryId);
+    }, [categoryId, refreshTrigger]);
 
     function editCategory() {
         histroy.push(`/category/${category.id}/edit`);
+    }
+
+    async function deleteTask(t) {
+        try {
+            await TaskApi.delete(t.id);
+            setRefreshTrigger(new Date());
+        } catch (err) {
+            setError(err);
+        }
+    }
+    
+    async function deleteCategory() {
+        try {
+            await CategoryApi.delete(categoryId);
+            histroy.push(`/`);
+        } catch (err) {
+            setError(err);
+        }
     }
 
     
@@ -49,17 +121,69 @@ export default function CategoryView() {
                             <h1 className="category-view__name">{ category.name }</h1>
                             <div className="category-view__description">{ category.description }</div>
                         </div>
-                        <Button
-                            size="small"
-                            variant="outlined"
-                            startIcon={<EditIcon/>}
-                            onClick={editCategory}
-                            >
-                            Kategorie bearbeiten
-                        </Button>
+                        <div className="category-view__actions">
+                            <Button
+                                size="small"
+                                variant="outlined"
+                                startIcon={<EditIcon/>}
+                                onClick={editCategory}
+                                >
+                                Bearbeiten
+                            </Button>
+                            <Button
+                                size="small"
+                                variant="outlined"
+                                startIcon={<DeleteIcon/>}
+                                color="secondary"
+                                onClick={deleteCategory}
+                                >
+                                Entfernen
+                            </Button>
+                        </div>
                     </Paper>
-                    <TaskForm />
+                    { !showTaskForm && <Button variant="contained" color="primary"  onClick={() => setShowTaskForm(true)}>Aufgabe hinzufügen</Button> }
+                    { showTaskForm && (
+                        <TaskForm
+                            categoryId={categoryId}
+                            onTaskCreated={onTaskCreated}
+                            onCloseForm={() => setShowTaskForm(false)}
+                        />
+                    )}
                 </>
+            )}
+
+            {tasks && tasks.length > 0 && (
+                <TableContainer component={Paper} className="category-view__table">
+                    <Table>
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Aufgabe</StyledTableCell>
+                            <StyledTableCell>Start</StyledTableCell>
+                            <StyledTableCell>End</StyledTableCell>
+                            <StyledTableCell>Frequency</StyledTableCell>
+                            <StyledTableCell>Aktion</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {tasks.map(task => (
+                            <StyledTableRow key={task.id}>
+                                <StyledTableCell component="th" scope="row">
+                                    <div className="category-view__task-title">{task.title}</div>
+                                    <div className="category-view__task-description">{task.description}</div>
+                                </StyledTableCell>
+                                <StyledTableCell>{formatDate(task.startDate)}</StyledTableCell>
+                                <StyledTableCell>{formatDate(task.endDate)}</StyledTableCell>
+                                <StyledTableCell>{getFrequencyLabel(task.frequency)}</StyledTableCell>
+                                <StyledTableCell>
+                                    <IconButton size="small" onClick={() => deleteTask(task)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                    </Table>
+                </TableContainer>
             )}
         </div>
     )

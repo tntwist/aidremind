@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Axios from 'axios';
 export default class AbstractResource {
     constructor(resourcePath) {
         this.resourcePath = resourcePath;
@@ -8,7 +8,7 @@ export default class AbstractResource {
      * @param {number} id 
      */
     async getOneById(id) {
-        const result = await axios.get(`${this.resourcePath}/${id}`);
+        const result = await Axios.get(`${this.resourcePath}/${id}`);
         return result.data;
     }
 
@@ -16,7 +16,7 @@ export default class AbstractResource {
      * Get all resource objects
      */
     async getAll() {
-        const result = await axios.get(this.resourcePath);
+        const result = await Axios.get(this.resourcePath);
         return result.data;
     }
 
@@ -27,7 +27,7 @@ export default class AbstractResource {
     async save(resourceObject) {
         const id = resourceObject.id;
         const suffix = id ? `/${id}` : '';
-        const result = await axios.post(`${this.resourcePath}${suffix}`, resourceObject);
+        const result = await Axios.post(`${this.resourcePath}${suffix}`, resourceObject);
         return result.data;
     }
 
@@ -36,6 +36,6 @@ export default class AbstractResource {
      * @param {number} id 
      */
     delete(id) {
-        return axios.delete(`${this.resourcePath}/${id}`);
+        return Axios.delete(`${this.resourcePath}/${id}`);
     }
 }
