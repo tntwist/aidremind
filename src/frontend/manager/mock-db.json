@@ -1,4 +1,22 @@
 {
+  "tasks": [
+    {
+      "title": "Hello world",
+      "description": "this is the first task",
+      "startDate": "2020-03-24T17:15:00.000Z",
+      "endDate": null,
+      "frequency": "* */1 * * *",
+      "id": 1
+    },
+    {
+      "title": "Hello world",
+      "description": "asdasd",
+      "startDate": "2020-03-24T18:21:00.000Z",
+      "endDate": null,
+      "frequency": "* */4 * * *",
+      "id": 2
+    }
+  ],
   "categories": [
     {
       "id": 1,
@@ -64,72 +82,6 @@
       "id": 13,
       "name": "Station 4.1",
       "parentId": 12
-    },
-    {
-      "name": "Station 5",
-      "description": "Kleine Beschreibung",
-      "parentId": null,
-      "id": 14
-    },
-    {
-      "name": "Station 6",
-      "description": "",
-      "parentId": null,
-      "id": 15
-    },
-    {
-      "name": "Station 7",
-      "description": "",
-      "parentId": null,
-      "id": 16
-    },
-    {
-      "name": "Station 5",
-      "description": "asd",
-      "parentId": null,
-      "id": 17
-    },
-    {
-      "name": "Station 5",
-      "description": "",
-      "parentId": null,
-      "id": 18
-    },
-    {
-      "name": "asd",
-      "description": "",
-      "parentId": null,
-      "id": 19
-    },
-    {
-      "name": "asd",
-      "description": "",
-      "parentId": null,
-      "id": 20
-    },
-    {
-      "name": "Station 5",
-      "description": "",
-      "parentId": null,
-      "id": 21
-    },
-    {
-      "name": "asd",
-      "description": "",
-      "parentId": null,
-      "id": 22
-    },
-    {
-      "name": "Test",
-      "description": "aasdasd",
-      "parentId": null,
-      "id": 23
-    },
-    {
-      "name": "Test1",
-      "description": "asd",
-      "parentId": null,
-      "id": 24
     }
   ]
 }

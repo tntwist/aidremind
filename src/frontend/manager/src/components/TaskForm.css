@@ -1,3 +1,20 @@
 .task-form {
     padding: 20px;
 }
+
+.task-form__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.task-form__title {
+    font-weight: bold;
+}
+
+.task-form__dates {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr;
+    gap: 25px;
+    align-items: center;
+}
