@@ -10,8 +10,9 @@ public class Task {
     private final String frequency;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
+    private final Integer amountOfSubscribers;
 
-    public Task(final Integer taskId, final Integer categoryId, final String title, final String description, final String frequency, final LocalDateTime startDate, final LocalDateTime endDate) {
+    public Task(final Integer taskId, final Integer categoryId, final String title, final String description, final String frequency, final LocalDateTime startDate, final LocalDateTime endDate, final Integer amountOfSubscribers) {
         this.taskId = taskId;
         this.categoryId = categoryId;
         this.title = title;
@@ -19,6 +20,7 @@ public class Task {
         this.frequency = frequency;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.amountOfSubscribers = amountOfSubscribers;
     }
 
     public Integer getTaskId() {
@@ -47,5 +49,9 @@ public class Task {
 
     public LocalDateTime getEndDate() {
         return this.endDate;
+    }
+
+    public Integer getAmountOfSubscribers() {
+        return this.amountOfSubscribers;
     }
 }

@@ -38,41 +38,41 @@ public class PushNotificationResource {
 
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("userId") Long userId) {
-        sessions.put(userId, session);
-        sessions.get(userId).getAsyncRemote().sendText("Succesfully subscribed for PushNotifications");
+    public void onOpen(final Session session, @PathParam("userId") final Long userId) {
+        this.sessions.put(userId, session);
+        this.sessions.get(userId).getAsyncRemote().sendText("Succesfully subscribed for PushNotifications");
     }
 
     @Incoming("task-is-due")
-    public void notifySubscribers(Task task) throws JsonProcessingException {
-        TaskActivity taskActivity = this.taskActivityService.create(new TaskActivity(null, task.getTaskId(), null));
-        String taskActivityJson = objectMapper.writeValueAsString(taskActivity);
-        List<Subscription> subscriptions = this.subscriptionService.getByTaskId(task.getTaskId());
+    public void notifySubscribers(final Task task) throws JsonProcessingException {
+        final TaskActivity taskActivity = this.taskActivityService.create(new TaskActivity(null, task.getTaskId(), null));
+        final String taskActivityJson = this.objectMapper.writeValueAsString(taskActivity);
+        final List<Subscription> subscriptions = this.subscriptionService.getByTaskId(task.getTaskId());
         subscriptions.stream().map(Subscription::getUserId).forEach(userId -> {
-            sessions.get(userId).getAsyncRemote().sendText(taskActivityJson);
+            this.sessions.get(userId).getAsyncRemote().sendText(taskActivityJson);
         });
     }
 
     @OnMessage
-    public void onMessage(Session session, @PathParam("userId") Long userId, String taskActivityJson) throws JMSException {
-        Connection connection = connectionFactory.createConnection();
-        javax.jms.Session jmsSession = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
-        Queue queue = jmsSession.createQueue("task-accepted");
-        MessageProducer producer = jmsSession.createProducer(queue);
+    public void onMessage(final Session session, @PathParam("userId") final Long userId, final String taskActivityJson) throws JMSException {
+        final Connection connection = this.connectionFactory.createConnection();
+        final javax.jms.Session jmsSession = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+        final Queue queue = jmsSession.createQueue("task-accepted");
+        final MessageProducer producer = jmsSession.createProducer(queue);
         producer.send(jmsSession.createTextMessage(taskActivityJson));
     }
 
     @Incoming("task-accepted")
-    public void acceptTask(TaskActivity taskActivity) throws JsonProcessingException {
-        TaskActivity storedTaskActivity = this.taskActivityService.getById(taskActivity.getTaskActivityId());
+    public void acceptTask(final TaskActivity taskActivity) throws JsonProcessingException {
+        final TaskActivity storedTaskActivity = this.taskActivityService.getById(taskActivity.getTaskActivityId());
         String taskActivityJson = "";
         if (null == storedTaskActivity.getUserId()) {
-            TaskActivity updatedTaskActivity = this.taskActivityService.update(taskActivity.getTaskActivityId(), taskActivity);
+            final TaskActivity updatedTaskActivity = this.taskActivityService.update(taskActivity.getTaskActivityId(), taskActivity);
             taskActivityJson = this.objectMapper.writeValueAsString(updatedTaskActivity);
         } else {
             taskActivityJson = this.objectMapper.writeValueAsString(storedTaskActivity);
         }
-        sessions.get(taskActivity.getUserId()).getAsyncRemote().sendText(taskActivityJson);
+        this.sessions.get(taskActivity.getUserId()).getAsyncRemote().sendText(taskActivityJson);
     }
 
 }

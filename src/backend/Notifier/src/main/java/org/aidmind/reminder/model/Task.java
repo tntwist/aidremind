@@ -3,15 +3,16 @@ package org.aidmind.reminder.model;
 import java.time.LocalDateTime;
 
 public class Task {
-    private Integer taskId;
-    private Integer categoryId;
-    private String title;
-    private String description;
-    private String frequency;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private final Integer taskId;
+    private final Integer categoryId;
+    private final String title;
+    private final String description;
+    private final String frequency;
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
+    private final Integer amountOfSubscribers;
 
-    public Task(Integer taskId, Integer categoryId, String title, String description, String frequency, LocalDateTime startDate, LocalDateTime endDate) {
+    public Task(final Integer taskId, final Integer categoryId, final String title, final String description, final String frequency, final LocalDateTime startDate, final LocalDateTime endDate, final Integer amountOfSubscribers) {
         this.taskId = taskId;
         this.categoryId = categoryId;
         this.title = title;
@@ -19,33 +20,38 @@ public class Task {
         this.frequency = frequency;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.amountOfSubscribers = amountOfSubscribers;
     }
 
     public Integer getTaskId() {
-        return taskId;
+        return this.taskId;
     }
 
     public Integer getCategoryId() {
-        return categoryId;
+        return this.categoryId;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getFrequency() {
-        return frequency;
+        return this.frequency;
     }
 
     public LocalDateTime getStartDate() {
-        return startDate;
+        return this.startDate;
     }
 
     public LocalDateTime getEndDate() {
-        return endDate;
+        return this.endDate;
+    }
+
+    public Integer getAmountOfSubscribers() {
+        return this.amountOfSubscribers;
     }
 }

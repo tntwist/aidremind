@@ -1,25 +1,25 @@
 package org.aidmind.reminder.model;
 
 public class Subscription {
-        private int subscriptionId;
-        private int userId;
-        private int taskId;
+    private final int subscriptionId;
+    private final int userId;
+    private final int taskId;
 
-    public Subscription(int subscriptionId, int userId, int taskId) {
+    public Subscription(final int subscriptionId, final int userId, final int taskId) {
         this.subscriptionId = subscriptionId;
         this.userId = userId;
         this.taskId = taskId;
     }
 
     public int getSubscriptionId() {
-        return subscriptionId;
+        return this.subscriptionId;
     }
 
     public int getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public int getTaskId() {
-        return taskId;
+        return this.taskId;
     }
 }
