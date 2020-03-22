@@ -1,7 +1,8 @@
 import Axios from 'axios';
 export default class AbstractResource {
-    constructor(resourcePath) {
+    constructor(resourcePath, idKey) {
         this.resourcePath = resourcePath;
+        this.idKey = idKey;
     }
     /**
      * Get one resource object
@@ -25,7 +26,7 @@ export default class AbstractResource {
      * @param {*} resourceObject 
      */
     async save(resourceObject) {
-        const id = resourceObject.id;
+        const id = resourceObject[this.idKey];
         const suffix = id ? `/${id}` : '';
         const result = await Axios.post(`${this.resourcePath}${suffix}`, resourceObject);
         return result.data;

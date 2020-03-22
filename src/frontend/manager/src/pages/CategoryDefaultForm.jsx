@@ -7,7 +7,7 @@ export default function CategoryDefaultForm({ onTriggerRefresh }) {
     const history = useHistory();
 
     function onCategorySaved(category) {
-        history.push(`/category/${category.id}`);
+        history.push(`/category/${category.categoryId}`);
         onTriggerRefresh();
     }
 

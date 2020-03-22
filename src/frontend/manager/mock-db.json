@@ -59,6 +59,15 @@
       "endDate": "2020-03-25T18:59:00.000Z",
       "frequency": "* */1 * * *",
       "id": 7
+    },
+    {
+      "categoryId": "14",
+      "title": "Test",
+      "description": "Beschreibung",
+      "startDate": "2020-03-23T20:21:00.000Z",
+      "endDate": null,
+      "frequency": "* */1 * * *",
+      "id": 8
     }
   ],
   "categories": [
@@ -126,6 +135,24 @@
       "id": 13,
       "name": "Station 4.1",
       "parentId": 12
+    },
+    {
+      "name": "Station 5",
+      "description": "",
+      "parentId": null,
+      "id": 14
+    },
+    {
+      "name": "Station 5.1",
+      "description": "",
+      "parentId": "14",
+      "id": 15
+    },
+    {
+      "name": "asd",
+      "description": "asd",
+      "parentId": "14",
+      "id": 16
     }
   ]
 }

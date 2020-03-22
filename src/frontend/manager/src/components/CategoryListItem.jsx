@@ -3,7 +3,7 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 import './CategoryListItem.css'
 
 export default function CategoryListItem({ className = '', categoryNode }) {
-    const routePath = `/category/${categoryNode.item.id}`;
+    const routePath = `/category/${categoryNode.item.categoryId}`;
     const isActive = !!useRouteMatch(routePath);
 
     const classes = [

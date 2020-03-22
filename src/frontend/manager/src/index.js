@@ -7,7 +7,7 @@ import Axios from 'axios';
 
 // Set defaults
 // TODO: use prosess.env.API_URL
-Axios.defaults.baseURL = 'http://localhost:3000';
+Axios.defaults.baseURL = 'http://localhost:3000/api';
 
 ReactDOM.render(
   <React.StrictMode>

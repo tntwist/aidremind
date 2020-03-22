@@ -104,7 +104,7 @@ export default function CategoryView({ onTriggerRefresh }) {
     async function deleteCategory() {
         try {
             await CategoryApi.delete(categoryId);
-            histroy.push(category.parentId ? `/category/${category.parentId}` : '/');
+            histroy.push(category.parentCategoryId ? `/category/${category.parentCategoryId}` : '/');
             onTriggerRefresh();
         } catch (err) {
             setError(err);

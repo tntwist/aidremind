@@ -11,4 +11,4 @@ class TaskApi extends AbstractResource {
     }
 }
 
-export default new TaskApi('/tasks');
+export default new TaskApi('/Tasks', 'taskId');

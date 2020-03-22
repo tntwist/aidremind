@@ -12,14 +12,15 @@ export default function CategoryForm({ category = null, parentCategoryId = null,
     async function onSubmit(data) {
         try {
             const newCategory = {
+                pointOfOperationId: 1,
                 name: data.categoryName,
                 description: data.description,
-                parentId: parentCategoryId,
+                parentCategoryId: parentCategoryId,
             };
 
             if (category) {
-                newCategory.id = category.id;
-                newCategory.parentId = category.parentId;
+                newCategory.categoryId = category.categoryId;
+                newCategory.parentCategoryId = category.parentCategoryId;
             }
 
             const response = await CategoryApi.save(newCategory);
