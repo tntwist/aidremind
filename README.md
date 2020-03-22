@@ -1,5 +1,5 @@
 # ID 024_Reminder_Aidremind #wevsvirus
-![Logo aidremind](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/aidremind_big.jpg)
+![Logo aidremind](https://raw.githubusercontent.com/tntwist/aidremind/master/images/the%20header.jpg)
 
 A [#WeVsVirus](https://wirvsvirushackathon.org/) project
 <!-- ![Logo wevsvirus](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/wevsvirus_projekt_01_weiss.png) -->
