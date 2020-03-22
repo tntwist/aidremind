@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using EFRepo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace ClerkApi
 {
@@ -30,15 +22,15 @@ namespace ClerkApi
         {
             services.AddControllers();
 
-            services.AddDbContext<AidRemindDbContext>(options => 
+            services.AddDbContext<AidRemindDbContext>(options =>
             {
-                var dbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var dbPath = Path.Combine(dbDirectory, "aidreminder.db");
-
-                options.UseSqlite($"Data Source={dbPath}");
+                options.UseNpgsql("Host=api-db;Port=5432;Database=api;Username=api;Password=api");
             });
 
-            services.AddOpenApiDocument();
+            services.AddOpenApiDocument(options =>
+            {
+                options.Title = "Aidremind.ClerkApi";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

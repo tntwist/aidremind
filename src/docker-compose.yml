@@ -1,0 +1,81 @@
+# A docker compose file to start an Artemis AMQP broker
+# more details on https://github.com/vromero/activemq-artemis-docker.
+version: "3.4"
+
+services:
+  artemis:
+    image: vromero/activemq-artemis:2.8.0-alpine
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      ARTEMIS_USERNAME: quarkus
+      ARTEMIS_PASSWORD: quarkus
+
+  schedulerpostgres:
+    image: postgres:alpine
+    container_name: quartz-db
+    volumes:
+      - ./init_quartz.sql:/docker-entrypoint-initdb.d/init.sql
+      - quartz-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=quartz
+      - POSTGRES_PASSWORD=quartz
+      - POSTGRES_DB=quartz
+    ports:
+      - 5432:5432
+    networks:
+      - scheduler-network
+
+  clerkapi:
+    container_name: clerk-api
+    image: ${DOCKER_REGISTRY-}clerkapi
+    build:
+      context: .
+      dockerfile: backend/ClerkApi/Dockerfile
+    ports:
+      - "8081:80"
+      - "44347:443"
+    depends_on:
+      - apipostgres
+      - managerapi
+    networks:
+      - api-network
+
+  managerapi:
+    container_name: manager-api
+    image: ${DOCKER_REGISTRY-}managerapi
+    build:
+      context: .
+      dockerfile: backend/ManagerApi/Dockerfile
+    ports:
+      - "8082:80"
+      - "44348:443"
+    depends_on:
+      - apipostgres
+    networks:
+      - api-network
+
+  apipostgres:
+    image: postgres:alpine
+    container_name: api-db
+    volumes:
+      - api-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=api
+      - POSTGRES_PASSWORD=api
+      - POSTGRES_DB=api
+    ports:
+      - 5433:5432
+    networks:
+      - api-network
+
+networks:
+  scheduler-network:
+  api-network:
+    driver: bridge
+
+volumes:
+  quartz-db:
+  api-db:

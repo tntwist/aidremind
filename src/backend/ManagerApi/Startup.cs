@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using EFRepo;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManagerApi
@@ -32,20 +24,18 @@ namespace ManagerApi
 
             services.AddDbContext<AidRemindDbContext>(options =>
             {
-                var dbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var dbPath = Path.Combine(dbDirectory, "aidreminder.db");
-
-                options.UseSqlite($"Data Source={dbPath}");
+                options.UseNpgsql("Host=api-db;Port=5432;Database=api;Username=api;Password=api");
             });
 
-            services.AddOpenApiDocument();
+            services.AddOpenApiDocument(options =>
+            {
+                options.Title = "Aidremind.ManagerApi";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AidRemindDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            dbContext.Database.Migrate();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
