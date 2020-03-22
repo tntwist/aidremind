@@ -32,13 +32,13 @@ namespace ManagerApi
 
             services.AddDbContext<AidRemindDbContext>(options =>
             {
-                var dbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var dbPath = Path.Combine(dbDirectory, "aidreminder.db");
-
-                options.UseSqlite($"Data Source={dbPath}");
+                options.UseSqlite($"Data Source=App_Data\\Database\\aidreminder.db");
             });
 
-            services.AddOpenApiDocument();
+            services.AddOpenApiDocument(options =>
+            {
+                options.Title = "Aidremind.ManagerApi";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
