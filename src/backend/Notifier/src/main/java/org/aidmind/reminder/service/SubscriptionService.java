@@ -7,12 +7,13 @@ import javax.enterprise.context.Dependent;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @RegisterRestClient
 @Dependent
 public interface SubscriptionService {
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     List<Subscription> getByTaskId(@QueryParam("taskId") Integer taskId);
 }
