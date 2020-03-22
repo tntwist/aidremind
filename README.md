@@ -49,4 +49,5 @@ We reached out to various companies to talk about the implementation on their si
 - Daniel: Java, Node, Python, React/Angular, SQL/NoSQL, OAS, Docker
 
 
-## The Stack
+## Architecture
+![Architecture](https://raw.githubusercontent.com/tntwist/aidremind/master/images/aidreminder-architecture.jpg)
