@@ -1,6 +1,8 @@
 # ID 024_Reminder_Aidremind #wevsvirus
 ![Logo aidremind](https://raw.githubusercontent.com/tntwist/aidremind/master/images/the%20header.jpg)
 
+[Youtube Video](https://youtu.be/nwp6h8HAf2c)
+
 A [#WeVsVirus](https://wirvsvirushackathon.org/) project
 <!-- ![Logo wevsvirus](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/wevsvirus_projekt_01_weiss.png) -->
 
