@@ -42,11 +42,16 @@ namespace ManagerApi.Controllers
             return category;
         }
 
-        // GET: 
         [HttpGet("OnTopLevel")]
         public async Task<ActionResult<IEnumerable<Category>>> OnTopLevel()
         {
-            return await _context.Categories.Where(c => c.ParentCategoryId == 0).ToListAsync();
+            return await _context.Categories.Where(c => c.ParentCategoryId == null).ToListAsync();
+        }
+
+        [HttpGet("WithParent/{id}")]
+        public async Task<ActionResult<IEnumerable<Category>>> WithParent(int id)
+        {
+            return await _context.Categories.Where(c => c.ParentCategoryId == id).ToListAsync();
         }
 
         // PUT: api/Categories/5
@@ -87,22 +92,6 @@ namespace ManagerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCategory", new { id = category.CategoryId }, category);
-        }
-
-        [HttpGet("WithoutParent")]
-        public async Task<ActionResult<Category>> PostCategoryWithoutParent()
-        {
-            var category = new Category();
-            category.CategoryId = 1;
-            category.Description = "test";
-            category.Name = "testname";
-            category.ParentCategoryId = 0;
-            category.PointOfOperationId = 0;
-            
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 
