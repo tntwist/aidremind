@@ -2,7 +2,7 @@
 ![Logo aidremind](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/aidremind_big.jpg)
 
 A [#WeVsVirus](https://wirvsvirushackathon.org/) project
-![Logo wevsvirus](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/wevsvirus_projekt_01_weiss.png)
+<!-- ![Logo wevsvirus](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/wevsvirus_projekt_01_weiss.png) -->
 
 ## Punchline
 
@@ -49,4 +49,4 @@ We reached out to various companies to talk about the implementation on their si
 - Daniel: Java, Node, Python, React/Angular, SQL/NoSQL, OAS, Docker
 
 
-## Technologies used
+## The Stack
