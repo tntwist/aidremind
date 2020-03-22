@@ -32,10 +32,7 @@ namespace ClerkApi
 
             services.AddDbContext<AidRemindDbContext>(options => 
             {
-                var dbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var dbPath = Path.Combine(dbDirectory, "aidreminder.db");
-
-                options.UseSqlite($"Data Source={dbPath}");
+                options.UseSqlite($"Data Source=App_Data\\Database\\aidreminder.db");
             });
 
             services.AddOpenApiDocument(options =>

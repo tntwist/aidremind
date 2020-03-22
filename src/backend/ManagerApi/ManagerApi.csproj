@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,16 +6,6 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     </PropertyGroup>
-
-    <ItemGroup>
-        <Compile Remove="ManagerApi\**" />
-        <Content Remove="ManagerApi\**" />
-        <EmbeddedResource Remove="ManagerApi\**" />
-        <None Remove="ManagerApi\**" />
-        <None Update="Dockerfile">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AMQPNetLite" Version="2.4.0" />
@@ -32,6 +22,19 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Repository\EFRepo.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="App_Data\Database\">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Dockerfile">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="App_Data\Database\" />
     </ItemGroup>
 
 </Project>

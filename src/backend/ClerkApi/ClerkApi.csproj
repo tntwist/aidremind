@@ -23,9 +23,16 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Update="App_Data\Database\">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
         <None Update="Dockerfile">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="App_Data\Database\" />
     </ItemGroup>
 
 </Project>
