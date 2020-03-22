@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["ManagerApi/ManagerApi.csproj", "ManagerApi/"]
-COPY ["Repository/EFRepo.csproj", "Repository/"]
+COPY ["backend/ManagerApi/ManagerApi.csproj", "ManagerApi/"]
+COPY ["backend/Repository/EFRepo.csproj", "Repository/"]
 RUN dotnet restore "ManagerApi/ManagerApi.csproj"
-COPY . .
+COPY backend/ .
 WORKDIR "/src/ManagerApi"
 RUN dotnet build "ManagerApi.csproj" -c Release -o /app/build
 

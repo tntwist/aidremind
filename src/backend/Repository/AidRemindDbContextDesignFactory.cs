@@ -9,7 +9,7 @@ namespace EFRepo
         public AidRemindDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AidRemindDbContext>();
-            optionsBuilder.UseSqlite("Data Source=aidremind.db");
+            optionsBuilder.UseNpgsql("Host=localhost:5433;Database=aidremind_db;Username=api;Password=api");
 
             return new AidRemindDbContext(optionsBuilder.Options);
         }
