@@ -1,17 +1,135 @@
 {
-    "categories": [
-        { "id": 1, "name": "Station 1", "parentId": null },
-        { "id": 2, "name": "Station 2", "parentId": null },
-        { "id": 3, "name": "Station 3", "parentId": null },
-        { "id": 4, "name": "Station 1.1", "parentId": 1 },
-        { "id": 5, "name": "Station 1.2", "parentId": 1 },
-        { "id": 6, "name": "Station 1.3", "parentId": 1 },
-        { "id": 7, "name": "Station 2.1", "parentId": 2 },
-        { "id": 8, "name": "Station 2.2", "parentId": 2 },
-        { "id": 9, "name": "Station 3.1", "parentId": 3 },
-        { "id": 10, "name": "Station 3.2", "parentId": 3 },
-        { "id": 11, "name": "Station 3.3", "parentId": 1 },
-        { "id": 12, "name": "Station 4", "parentId": null },
-        { "id": 13, "name": "Station 4.1", "parentId": 12 }
-    ]
+  "categories": [
+    {
+      "id": 1,
+      "name": "Station 1",
+      "parentId": null
+    },
+    {
+      "id": 2,
+      "name": "Station 2",
+      "parentId": null
+    },
+    {
+      "id": 3,
+      "name": "Station 3",
+      "parentId": null
+    },
+    {
+      "id": 4,
+      "name": "Station 1.1",
+      "parentId": 1
+    },
+    {
+      "id": 5,
+      "name": "Station 1.2",
+      "parentId": 1
+    },
+    {
+      "id": 6,
+      "name": "Station 1.3",
+      "parentId": 1
+    },
+    {
+      "id": 7,
+      "name": "Station 2.1",
+      "parentId": 2
+    },
+    {
+      "id": 8,
+      "name": "Station 2.2",
+      "parentId": 2
+    },
+    {
+      "id": 9,
+      "name": "Station 3.1",
+      "parentId": 3
+    },
+    {
+      "id": 10,
+      "name": "Station 3.2",
+      "parentId": 3
+    },
+    {
+      "id": 11,
+      "name": "Station 3.3",
+      "parentId": 1
+    },
+    {
+      "id": 12,
+      "name": "Station 4",
+      "parentId": null
+    },
+    {
+      "id": 13,
+      "name": "Station 4.1",
+      "parentId": 12
+    },
+    {
+      "name": "Station 5",
+      "description": "Kleine Beschreibung",
+      "parentId": null,
+      "id": 14
+    },
+    {
+      "name": "Station 6",
+      "description": "",
+      "parentId": null,
+      "id": 15
+    },
+    {
+      "name": "Station 7",
+      "description": "",
+      "parentId": null,
+      "id": 16
+    },
+    {
+      "name": "Station 5",
+      "description": "asd",
+      "parentId": null,
+      "id": 17
+    },
+    {
+      "name": "Station 5",
+      "description": "",
+      "parentId": null,
+      "id": 18
+    },
+    {
+      "name": "asd",
+      "description": "",
+      "parentId": null,
+      "id": 19
+    },
+    {
+      "name": "asd",
+      "description": "",
+      "parentId": null,
+      "id": 20
+    },
+    {
+      "name": "Station 5",
+      "description": "",
+      "parentId": null,
+      "id": 21
+    },
+    {
+      "name": "asd",
+      "description": "",
+      "parentId": null,
+      "id": 22
+    },
+    {
+      "name": "Test",
+      "description": "aasdasd",
+      "parentId": null,
+      "id": 23
+    },
+    {
+      "name": "Test1",
+      "description": "asd",
+      "parentId": null,
+      "id": 24
+    }
+  ]
 }

@@ -27,7 +27,7 @@ export default class AbstractResource {
     async save(resourceObject) {
         const id = resourceObject.id;
         const suffix = id ? `/${id}` : '';
-        const result = axios.post(`${this.resourcePath}${suffix}`);
+        const result = await axios.post(`${this.resourcePath}${suffix}`, resourceObject);
         return result.data;
     }
 

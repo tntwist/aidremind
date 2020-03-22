@@ -1,10 +1,11 @@
 import React from 'react';
+import './HomeView.css'
 
 export default function HomeView() {
     return (
-        <div>
-            <h1>Welcome to aidremind</h1>
-            <p>Select a category from the left to get started</p>
+        <div className="home-view">
+            <h1>Willkommen bei aidremind</h1>
+            <div>Wählen Sie eine Kategorie aus um dessen Aufgaben zu verwalten.</div>
         </div>
     )
 }

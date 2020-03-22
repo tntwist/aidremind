@@ -1,7 +1,5 @@
 .header {
     background-color: #003af0;
-    /* background: rgb(67,111,255);
-    background: linear-gradient(333deg, rgba(67,111,255,1) 0%, rgba(10,44,152,1) 100%); */
     padding: 20px;
     width: 100%;
     display: grid;
@@ -14,5 +12,4 @@
 .header__title {
     font-size: 24px;
     font-weight: bold;
-    font-family: 'Fredoka One';
 }

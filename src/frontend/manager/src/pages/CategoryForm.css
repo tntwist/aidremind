@@ -1,0 +1,11 @@
+.category-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+.category-form__form {
+    display: grid;
+    grid-template-columns: minmax(auto, 500px);
+    gap: 25px;
+}

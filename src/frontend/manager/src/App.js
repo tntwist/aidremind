@@ -19,6 +19,7 @@ function App() {
         <div className="app__content">
           <Switch>
             <Route path="/category/add" component={CategoryForm} />
+            <Route path="/category/:categoryId/edit" component={CategoryForm} />
             <Route path="/category/:categoryId" component={CategoryView} />
             <Route path="/" component={HomeView} />
           </Switch>

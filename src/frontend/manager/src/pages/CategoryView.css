@@ -1,0 +1,18 @@
+/* .category-view {} */
+
+.category-view__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.category-view__name {
+    margin: 0;
+}
+
+.category-view__description {
+    margin-top: 5px;
+    color: #555;
+}
