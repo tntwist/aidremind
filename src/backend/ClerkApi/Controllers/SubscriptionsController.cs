@@ -96,6 +96,10 @@ namespace ClerkApi.Controllers
         public async Task<ActionResult<Subscription>> PostSubscription(Subscription subscription)
         {
             _context.Subscriptions.Add(subscription);
+
+            var task = await _context.Tasks.FindAsync(subscription.TaskId);
+            task.AmountOfSubscribers += 1;
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSubscription", new { id = subscription.SubscriptionId }, subscription);
@@ -112,6 +116,10 @@ namespace ClerkApi.Controllers
             }
 
             _context.Subscriptions.Remove(subscription);
+
+            var task = await _context.Tasks.FindAsync(subscription.TaskId);
+            task.AmountOfSubscribers -= 1;
+
             await _context.SaveChangesAsync();
 
             return subscription;

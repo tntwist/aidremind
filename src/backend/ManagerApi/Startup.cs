@@ -31,20 +31,24 @@ namespace ManagerApi
             {
                 options.Title = "Aidremind.ManagerApi";
             });
+
+            services.AddTransient<DataSeed>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataSeed seeder)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            seeder.SeedData();
+
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
