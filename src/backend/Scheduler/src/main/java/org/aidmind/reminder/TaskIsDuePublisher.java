@@ -1,8 +1,5 @@
 package org.aidmind.reminder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.aidmind.reminder.model.Task;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.eclipse.microprofile.config.ConfigProvider;
 import org.quartz.Job;

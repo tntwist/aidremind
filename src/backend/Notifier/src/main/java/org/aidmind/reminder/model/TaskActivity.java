@@ -2,25 +2,25 @@ package org.aidmind.reminder.model;
 
 public class TaskActivity {
 
-    private Integer taskActivityId;
-    private Integer taskId;
-    private Integer userId;
+    private final Integer taskActivityId;
+    private final Integer taskId;
+    private final Integer userId;
 
-    public TaskActivity(Integer taskActivityId, Integer taskId, Integer userId) {
+    public TaskActivity(final Integer taskActivityId, final Integer taskId, final Integer userId) {
         this.taskActivityId = taskActivityId;
         this.taskId = taskId;
         this.userId = userId;
     }
 
     public Integer getTaskActivityId() {
-        return taskActivityId;
+        return this.taskActivityId;
     }
 
     public Integer getTaskId() {
-        return taskId;
+        return this.taskId;
     }
 
     public Integer getUserId() {
-        return userId;
+        return this.userId;
     }
 }
