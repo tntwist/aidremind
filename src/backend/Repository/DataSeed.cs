@@ -21,7 +21,7 @@ namespace EFRepo
         {
             var poi = new PointOfOperation
             {
-                PointOfOperationId = 0,
+                PointOfOperationId = 1,
                 Name = "Test Org",
                 City = "Springfield",
                 Zipcode = "01020",
@@ -34,35 +34,42 @@ namespace EFRepo
 
         internal void SeedCategories()
         {
+            if (!_ctx.PointOfOperations.Any())
+            {
+                return;
+            }
+
+            var poo = _ctx.PointOfOperations.FirstOrDefault();
+
             var cats = new List<Category> 
             {  
                 new Category
                 {
                     CategoryId = 1,
-                    PointOfOperationId = 1,
+                    PointOfOperationId = poo.PointOfOperationId,
                     Name = "Tent 1",
                     Description = "Test tent we build up in a hurry",
                     ParentCategoryId = 0,
                     Height = 0,
                 },
-                new Category
-                {
-                    CategoryId = 2,
-                    PointOfOperationId = 1,
-                    Name = "Bed 1",
-                    Description = "Bed number one",
-                    ParentCategoryId = 1,
-                    Height = 1,
-                },
-                new Category
-                {
-                    CategoryId = 3,
-                    PointOfOperationId = 1,
-                    Name = "Bed 2",
-                    Description = "Bed number two",
-                    ParentCategoryId = 1,
-                    Height = 1,
-                },
+                //new Category
+                //{
+                //    CategoryId = 2,
+                //    PointOfOperationId = poo.PointOfOperationId,
+                //    Name = "Bed 1",
+                //    Description = "Bed number one",
+                //    ParentCategoryId = 1,
+                //    Height = 1,
+                //},
+                //new Category
+                //{
+                //    CategoryId = 3,
+                //    PointOfOperationId = poo.PointOfOperationId,
+                //    Name = "Bed 2",
+                //    Description = "Bed number two",
+                //    ParentCategoryId = 1,
+                //    Height = 1,
+                //},
             };
 
             foreach (var item in cats)
@@ -73,12 +80,19 @@ namespace EFRepo
 
         internal void SeedTasks()
         {
+            if (!_ctx.Categories.Any())
+            {
+                return;
+            }
+
+            var c = _ctx.Categories.FirstOrDefault();
+
             var task = new Task
             {
                 TaskId = 0,
                 Title = "Turn patient over",
                 Description = "The patient needs to be turned over so that he does not lie on one side for too long",
-                CategoryId = 2,
+                CategoryId = c.CategoryId,
                 StartDate = DateTime.Now.AddHours(-1),
                 AmountOfSubscribers = 0,
                 Frequency = "30 * * * *",
@@ -89,17 +103,24 @@ namespace EFRepo
 
         internal void SeedUsers()
         {
+            if (!_ctx.PointOfOperations.Any())
+            {
+                return;
+            }
+
+            var poo = _ctx.PointOfOperations.FirstOrDefault();
+
             var users = new List<User>
             {
                 new User
                 {
-                    PointOfOperationId = 1,
+                    PointOfOperationId = poo.PointOfOperationId,
                     UserId = 1,
                     Username = "Mrs. Jane Doe",
                 },
                 new User
                 {
-                    PointOfOperationId = 1,
+                    PointOfOperationId = poo.PointOfOperationId,
                     UserId = 2,
                     Username = "Mr. John Doe",
                 },
@@ -113,11 +134,16 @@ namespace EFRepo
 
         internal void SeedSubscriptions()
         {
+            if(!_ctx.Tasks.Any() || !_ctx.Users.Any())
+            {
+                return;
+            }
+
             var subscr = new Subscription
             {
                 SubscriptionId = 1,
-                TaskId = 1,
-                UserId = 1,
+                TaskId = _ctx.Tasks.FirstOrDefault().TaskId,
+                UserId = _ctx.Users.FirstOrDefault().UserId,
             };
 
             _ctx.Subscriptions.Add(subscr);
@@ -125,21 +151,23 @@ namespace EFRepo
 
         internal void SeedTaskActivities()
         {
+            var task = _ctx.Tasks.FirstOrDefault();
+            var user = _ctx.Users.FirstOrDefault();
             var acts = new List<TaskActivity>
             {
                 new TaskActivity
                 {
                     TaskActivityId = 1,
-                    UserId = 1,
-                    TaskId = 1,
+                    UserId = user.UserId,
+                    TaskId = task.TaskId,
                     DueToDate = DateTime.Now.AddMinutes(-30),
                     DoneDate = DateTime.Now.AddMinutes(-29),
                 },
                 new TaskActivity
                 {
                     TaskActivityId = 2,
-                    UserId = 1,
-                    TaskId = 1,
+                    UserId = user.UserId,
+                    TaskId = task.TaskId,
                     DueToDate = DateTime.Now,
                 },
             };
