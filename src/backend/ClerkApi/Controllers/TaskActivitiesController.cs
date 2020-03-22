@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EFRepo;
 using EFRepo.Entities;
+using Quartz;
 
 namespace ClerkApi.Controllers
 {
@@ -33,6 +34,54 @@ namespace ClerkApi.Controllers
             }
 
             return await taskActivitiesQuery.ToListAsync();
+        }
+
+        // GET: api/UpcomingTaskActivities?userId=50
+        [HttpGet("Upcoming")]
+        public async Task<ActionResult<IEnumerable<TaskActivity>>> GetUpcomingTaskActivities([FromQuery] int userId)
+        {
+            if (userId < 0) return BadRequest();
+
+            var subscriptions = await _context.Subscriptions
+                .Include(s => s.Task)
+                .Where(s => s.UserId == userId)
+                .ToListAsync();
+
+            var tasks = subscriptions.Select(s => s.Task).ToList();
+            tasks.ForEach(t => t.Subscriptions = null);
+
+
+            var taskActivities = new List<TaskActivity>();
+
+            foreach (var task in tasks)
+            {
+                var expression = new CronExpression(task.Frequency + " ?");
+                var currentDate = DateTime.UtcNow;
+
+                var tomorrow = DateTime.UtcNow.AddDays(1).Date;
+
+                while (currentDate < tomorrow)
+                {
+                    var nextTime = expression.GetTimeAfter(currentDate);
+                    if (!nextTime.HasValue) 
+                    {
+                        break;
+                    }
+
+                    var taskActivity = new TaskActivity
+                    {
+                        DueToDate = nextTime.Value.DateTime,
+                        Task = task,
+                        TaskId = task.TaskId                        
+                    };
+
+                    taskActivities.Add(taskActivity);
+
+                    currentDate = nextTime.Value.DateTime;
+                }
+            }
+
+            return taskActivities;
         }
 
         // GET: api/TaskActivities/5
