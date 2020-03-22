@@ -11,12 +11,13 @@ services:
       - "61616:61616"
       - "5672:5672"
     environment:
-      ARTEMIS_USERNAME: quarkus
+      ARTEMIS_USERNAME: quarkus 
       ARTEMIS_PASSWORD: quarkus
   postgres: 
     image: postgres:alpine
     container_name: quartz-db
     volumes:
+      - ./init_quartz.sql:/docker-entrypoint-initdb.d/init.sql
       - quartz-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=quartz
