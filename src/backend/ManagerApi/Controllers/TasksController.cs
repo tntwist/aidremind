@@ -7,6 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EFRepo;
 using EFRepo.Entities;
+using Amqp.Framing;
+using Amqp.Handler;
+using Amqp.Listener;
+using Amqp.Sasl;
+using Amqp.Transactions;
+using Amqp.Types;
+using Amqp;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace ManagerApi.Controllers
 {
@@ -16,9 +25,12 @@ namespace ManagerApi.Controllers
     {
         private readonly AidRemindDbContext _context;
 
-        public TasksController(AidRemindDbContext context)
+        private IConfiguration _configuration;
+
+        public TasksController(AidRemindDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Tasks
@@ -83,7 +95,33 @@ namespace ManagerApi.Controllers
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTask", new { id = task.TaskId }, task);
+            var createdAtAction = CreatedAtAction("GetTask", new { id = task.TaskId }, task);
+
+            await SendTaskCreatedEventToAMQP(createdAtAction);
+
+            return createdAtAction;
+        }
+
+        private async System.Threading.Tasks.Task SendTaskCreatedEventToAMQP(CreatedAtActionResult createdAtAction)
+        {
+            if (createdAtAction.StatusCode == 200
+                            || createdAtAction.StatusCode == 201
+                            || createdAtAction.StatusCode == 204
+                            || createdAtAction.StatusCode == 205)
+            {
+                var amqpSettings = _configuration.GetSection("AMQPSettings");
+                var addressConfiguration = amqpSettings.GetSection("Address").Value;
+                var messageForTaskCreatedEventConfiguration = amqpSettings.GetSection("MessageForTaskCreatedEvent").Value;
+                var senderLinkNameConfiguration = amqpSettings.GetSection("SenderLinkName").Value;
+                var senderLinkAddressConfiguration = amqpSettings.GetSection("SenderLinkAddress").Value;
+                
+                Address address = new Address(addressConfiguration);
+                Connection connection = await Connection.Factory.CreateAsync(address);
+                Session session = new Session(connection);
+                Message message = new Message(messageForTaskCreatedEventConfiguration);
+                var sender = new SenderLink(session, senderLinkNameConfiguration, senderLinkAddressConfiguration);
+                await sender.SendAsync(message);
+            }
         }
 
         // DELETE: api/Tasks/5
