@@ -35,7 +35,7 @@ public class TaskCreatedConsumer {
 
         final String taskJson = this.objectMapper.writeValueAsString(task);
 
-        final String jobIdentity = task.getId() + '_' + task.getTitle() + "_job";
+        final String jobIdentity = task.getTaskId() + '_' + task.getTitle() + "_job";
         final JobDetail job = this.createJob(taskJson, jobIdentity);
 
         final Date startDate = Date.from(task.getStartDate().atZone(ZoneId.systemDefault()).toInstant());
@@ -47,7 +47,7 @@ public class TaskCreatedConsumer {
 
     private Trigger createTrigger(final Task task, final String jobIdentity, final Date startDate, final Date endDate) {
         return newTrigger()
-                .withIdentity(task.getId() + '_' + task.getTitle() + "_trigger")
+                .withIdentity(task.getTaskId() + '_' + task.getTitle() + "_trigger")
                 .withSchedule(cronSchedule(task.getFrequency()))
                 .startAt(startDate)
                 .endAt(endDate)

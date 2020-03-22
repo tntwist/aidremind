@@ -3,16 +3,16 @@ package org.aidmind.reminder.model;
 import java.time.LocalDateTime;
 
 public class Task {
-    private long id;
-    private long categoryId;
-    private String title;
-    private String description;
-    private String frequency;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private final Integer taskId;
+    private final Integer categoryId;
+    private final String title;
+    private final String description;
+    private final String frequency;
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
 
-    public Task(long id, long categoryId, String title, String description, String frequency, LocalDateTime startDate, LocalDateTime endDate) {
-        this.id = id;
+    public Task(final Integer taskId, final Integer categoryId, final String title, final String description, final String frequency, final LocalDateTime startDate, final LocalDateTime endDate) {
+        this.taskId = taskId;
         this.categoryId = categoryId;
         this.title = title;
         this.description = description;
@@ -21,31 +21,31 @@ public class Task {
         this.endDate = endDate;
     }
 
-    public long getId() {
-        return id;
+    public Integer getTaskId() {
+        return this.taskId;
     }
 
-    public long getCategoryId() {
-        return categoryId;
+    public Integer getCategoryId() {
+        return this.categoryId;
     }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getFrequency() {
-        return frequency;
+        return this.frequency;
     }
 
     public LocalDateTime getStartDate() {
-        return startDate;
+        return this.startDate;
     }
 
     public LocalDateTime getEndDate() {
-        return endDate;
+        return this.endDate;
     }
 }
