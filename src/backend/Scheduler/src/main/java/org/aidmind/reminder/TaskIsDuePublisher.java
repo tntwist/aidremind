@@ -35,8 +35,10 @@ public class TaskIsDuePublisher implements Job {
 
     private Connection createConnection() throws JMSException {
         String connectionUrl = ConfigProvider.getConfig().getValue("quarkus.qpid-jms.url", String.class);
+        String userName = ConfigProvider.getConfig().getValue("quarkus.qpid-jms.username", String.class);
+        String password = ConfigProvider.getConfig().getValue("quarkus.qpid-jms.password", String.class);
         Connection connection = null;
-        ConnectionFactory connectionFactory = new JmsConnectionFactory(connectionUrl);
+        ConnectionFactory connectionFactory = new JmsConnectionFactory(userName, password, connectionUrl);
         connection = connectionFactory.createConnection();
         return connection;
     }

@@ -49,16 +49,11 @@ public class PushNotificationResource {
     }
 
     @Incoming("task-is-due")
-<<<<<<< Updated upstream
-    public void notifySubscribers(final Task task) throws JsonProcessingException {
-        final TaskActivity taskActivity = this.taskActivityService.create(new TaskActivity(null, task.getTaskId(), null));
-=======
     public void notifySubscribers(final String taskJson) throws JsonProcessingException {
         final Task task = this.objectMapper.readValue(taskJson, Task.class);
         LOGGER.info("CREATE TASK ACTIVITY FOR TASK " + task.getTaskId());
         final TaskActivity taskActivity = this.taskActivityService.create(new TaskActivity(null, task.getTaskId(), null, new Date()));
         LOGGER.info("CREATED TASK ACTIVITY " + taskActivity.getTaskActivityId());
->>>>>>> Stashed changes
         final String taskActivityJson = this.objectMapper.writeValueAsString(taskActivity);
         LOGGER.info("LOAD SUBSCRIPTIONS");
         final List<Subscription> subscriptions = this.subscriptionService.getByTaskId(task.getTaskId());

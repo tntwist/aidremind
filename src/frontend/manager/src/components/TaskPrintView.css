@@ -1,0 +1,53 @@
+.task-print-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-print-view__stage {
+    border: 0.1cm solid #ccc;
+    width: 5cm;
+}
+
+.task-print-view__stage-body {
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
+    align-items: center;
+    gap: .5cm;
+    padding: 10px;
+}
+
+.task-print-view__title {
+    font-size: .4cm;
+}
+
+@media print {
+    .task-print-view__close-dialog-button {
+        display: none !important;
+    }
+}
+
+.task-print-view__qrcode {
+    width: 100%;
+    height: auto;
+}
+
+.task-print-view__qrcode > img {
+    display: block;
+    width: 100%;
+}
+
+.task-print-view__category {
+    font-size: .4cm;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px 10px;
+    border-bottom: 0.1cm solid #ccc;
+}

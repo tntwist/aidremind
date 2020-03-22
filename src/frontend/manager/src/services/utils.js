@@ -76,6 +76,11 @@ export const frequencyOptions = [
 ];
 
 export function getFrequencyLabel(frequencyValue) {
-  const frequency = frequencyOptions.find(f => f.value === frequencyValue);
+  const frequency = getFrequency(frequencyValue);
   return frequency ? frequency.label : null;
+}
+
+export function getFrequency(frequencyValue) {
+  const frequency = frequencyOptions.find(f => f.value === frequencyValue);
+  return frequency ? frequency : null;
 }
