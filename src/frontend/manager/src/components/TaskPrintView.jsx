@@ -35,6 +35,7 @@ export default function TaskPrintView({ task, category, onCloseDialog }) {
                 <div className="task-print-view__stage-body">
                         <div className="task-print-view__title">{task.title}</div>
                         <div id="qr" className="task-print-view__qrcode"></div>
+                        <Button className="task-print-view__close-dialog-button" variant="outlined" onClick={() => window.print()}>Aufgabe drucken</Button>
                         <Button className="task-print-view__close-dialog-button" variant="outlined" onClick={onCloseDialog}>Dialog schließen</Button>
                 </div>
             </div>
