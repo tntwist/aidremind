@@ -20,6 +20,7 @@ import TaskApi from '../services/TaskApi';
 import format from 'date-fns/format';
 import { getFrequencyLabel } from '../services/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CategoryForm from '../components/CategoryForm';
 
 
 const StyledTableCell = withStyles(theme => ({
@@ -50,12 +51,20 @@ export default function CategoryView() {
     const [error, setError] = useState(null);
     const [category, setCategory] = useState(null);
     const histroy = useHistory();
-    const [showTaskForm, setShowTaskForm] = useState(null);
+    const [activeForm, setActiveForm] = useState(null);
+
     const [tasks, setTasks] = useState(null);
     const [refreshTrigger, setRefreshTrigger] = useState(new Date());
 
     function onTaskCreated() {
-        setShowTaskForm(false);
+        setActiveForm(null);
+        setRefreshTrigger(new Date());
+    }
+    
+    function onCategorySaved() {
+        console.log('Refresh categories list');
+
+        setActiveForm(null);
         setRefreshTrigger(new Date());
     }
 
@@ -99,7 +108,7 @@ export default function CategoryView() {
     async function deleteCategory() {
         try {
             await CategoryApi.delete(categoryId);
-            histroy.push(`/`);
+            histroy.push(category.parentId ? `/category/${category.parentId}` : '/');
         } catch (err) {
             setError(err);
         }
@@ -116,75 +125,103 @@ export default function CategoryView() {
             )}
             {category && (
                 <>
-                    <Paper className="category-view__head">
-                        <div>
-                            <h1 className="category-view__name">{ category.name }</h1>
-                            <div className="category-view__description">{ category.description }</div>
+                    { activeForm !== 'edit' && (
+                        <Paper className="category-view__head">
+                            <div>
+                                <h1 className="category-view__name">{ category.name }</h1>
+                                <div className="category-view__description">{ category.description }</div>
+                            </div>
+                            <div className="category-view__actions">
+                                <Button
+                                    size="small"
+                                    variant="outlined"
+                                    startIcon={<EditIcon/>}
+                                    onClick={() => setActiveForm('edit')}
+                                    >
+                                    Bearbeiten
+                                </Button>
+                                <Button
+                                    size="small"
+                                    variant="outlined"
+                                    startIcon={<DeleteIcon/>}
+                                    color="secondary"
+                                    onClick={deleteCategory}
+                                    >
+                                    Entfernen
+                                </Button>
+                            </div>
+                        </Paper>
+                    )}
+                    { activeForm === 'edit' && (
+                        <CategoryForm
+                            category={category}
+                            onCategorySaved={onCategorySaved}
+                            onCloseForm={() => setActiveForm(null)}
+                        />
+                    )}
+
+                    { !activeForm && (
+                        <div className="category-view__main-actions">
+                            <Button variant="contained" color="primary"  onClick={() => setActiveForm('task')}>Aufgabe hinzufügen</Button>
+                            <Button variant="outlined" color="primary"  onClick={() => setActiveForm('subcategory')}>Unterkategorie hinzufügen</Button>
                         </div>
-                        <div className="category-view__actions">
-                            <Button
-                                size="small"
-                                variant="outlined"
-                                startIcon={<EditIcon/>}
-                                onClick={editCategory}
-                                >
-                                Bearbeiten
-                            </Button>
-                            <Button
-                                size="small"
-                                variant="outlined"
-                                startIcon={<DeleteIcon/>}
-                                color="secondary"
-                                onClick={deleteCategory}
-                                >
-                                Entfernen
-                            </Button>
-                        </div>
-                    </Paper>
-                    { !showTaskForm && <Button variant="contained" color="primary"  onClick={() => setShowTaskForm(true)}>Aufgabe hinzufügen</Button> }
-                    { showTaskForm && (
+                    )}
+
+                    { activeForm === 'task' && (
                         <TaskForm
                             categoryId={categoryId}
                             onTaskCreated={onTaskCreated}
-                            onCloseForm={() => setShowTaskForm(false)}
+                            onCloseForm={() => setActiveForm(null)}
+                        />
+                    )}
+
+                    { activeForm === 'subcategory' && (
+                        <CategoryForm
+                            parentCategoryId={categoryId}
+                            onCategorySaved={onCategorySaved}
+                            onCloseForm={() => setActiveForm(null)}
                         />
                     )}
                 </>
             )}
 
-            {tasks && tasks.length > 0 && (
-                <TableContainer component={Paper} className="category-view__table">
-                    <Table>
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell>Aufgabe</StyledTableCell>
-                            <StyledTableCell>Start</StyledTableCell>
-                            <StyledTableCell>End</StyledTableCell>
-                            <StyledTableCell>Frequency</StyledTableCell>
-                            <StyledTableCell>Aktion</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tasks.map(task => (
-                            <StyledTableRow key={task.id}>
-                                <StyledTableCell component="th" scope="row">
-                                    <div className="category-view__task-title">{task.title}</div>
-                                    <div className="category-view__task-description">{task.description}</div>
-                                </StyledTableCell>
-                                <StyledTableCell>{formatDate(task.startDate)}</StyledTableCell>
-                                <StyledTableCell>{formatDate(task.endDate)}</StyledTableCell>
-                                <StyledTableCell>{getFrequencyLabel(task.frequency)}</StyledTableCell>
-                                <StyledTableCell>
-                                    <IconButton size="small" onClick={() => deleteTask(task)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
+            {tasks && tasks.length > 0 && <TasksTable tasks={tasks} deleteTask={deleteTask} />}
         </div>
     )
+}
+
+function TasksTable({ tasks, deleteTask }) {
+    return (
+        <TableContainer component={Paper} className="category-view__table">
+            <Table>
+            <TableHead>
+                <TableRow>
+                    <StyledTableCell>Aufgabe</StyledTableCell>
+                    <StyledTableCell>Start</StyledTableCell>
+                    <StyledTableCell>End</StyledTableCell>
+                    <StyledTableCell>Frequency</StyledTableCell>
+                    <StyledTableCell>Aktion</StyledTableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {tasks.map(task => (
+                    <StyledTableRow key={task.id}>
+                        <StyledTableCell component="th" scope="row">
+                            <div className="category-view__task-title">{task.title}</div>
+                            <div className="category-view__task-description">{task.description}</div>
+                        </StyledTableCell>
+                        <StyledTableCell>{formatDate(task.startDate)}</StyledTableCell>
+                        <StyledTableCell>{formatDate(task.endDate)}</StyledTableCell>
+                        <StyledTableCell>{getFrequencyLabel(task.frequency)}</StyledTableCell>
+                        <StyledTableCell>
+                            <IconButton size="small" onClick={() => deleteTask(task)}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </StyledTableCell>
+                    </StyledTableRow>
+                ))}
+            </TableBody>
+            </Table>
+        </TableContainer>
+    );
 }

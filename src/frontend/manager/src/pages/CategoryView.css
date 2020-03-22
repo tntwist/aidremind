@@ -35,3 +35,9 @@
     color: #b1b1b1;
     font-size: 14px;
 }
+
+.category-view__main-actions {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 25px;
+}

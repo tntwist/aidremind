@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import CategoryView from './pages/CategoryView';
-import CategoryForm from './pages/CategoryForm';
+import CategoryDefaultForm from './pages/CategoryDefaultForm';
 import HomeView from './pages/HomeView';
 
 function App() {
@@ -18,8 +18,8 @@ function App() {
  
         <div className="app__content">
           <Switch>
-            <Route path="/category/add" component={CategoryForm} />
-            <Route path="/category/:categoryId/edit" component={CategoryForm} />
+            <Route path="/category/add" component={CategoryDefaultForm} />
+            {/* <Route path="/category/:categoryId/edit" component={CategoryDefaultForm} /> */}
             <Route path="/category/:categoryId" component={CategoryView} />
             <Route path="/" component={HomeView} />
           </Switch>
