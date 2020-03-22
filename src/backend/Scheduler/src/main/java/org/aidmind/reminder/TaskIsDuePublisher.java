@@ -21,10 +21,9 @@ public class TaskIsDuePublisher implements Job {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Queue queue = session.createQueue("task-is-due");
             MessageProducer producer = session.createProducer(queue);
-            Task task = (Task) jobExecutionContext.getJobDetail().getJobDataMap().get("task");
-            ObjectMapper objectMapper = new ObjectMapper();
-            producer.send(session.createTextMessage(objectMapper.writeValueAsString(task)));
-        } catch (JMSException | JsonProcessingException e) {
+            String taskJson = jobExecutionContext.getJobDetail().getJobDataMap().getString("task");
+            producer.send(session.createTextMessage(taskJson));
+        } catch (JMSException e) {
             throw new JobExecutionException(e);
         } finally {
             if (connection != null) {

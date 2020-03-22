@@ -8,6 +8,8 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -21,6 +23,8 @@ import static org.quartz.TriggerBuilder.newTrigger;
 @ApplicationScoped
 public class TaskCreatedConsumer {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskCreatedConsumer.class);
+
     private final Scheduler scheduler;
     private final ObjectMapper objectMapper;
 
@@ -30,17 +34,23 @@ public class TaskCreatedConsumer {
         this.objectMapper = objectMapper;
     }
 
-    @Incoming("task-created")
-    public void scheduleTask(final String taskJson) throws JsonProcessingException, SchedulerException {
-        final Task task = this.objectMapper.readValue(taskJson, Task.class);
-        final String jobIdentity = task.getTaskId() + '_' + task.getTitle() + "_job";
-        final JobDetail job = this.createJob(taskJson, jobIdentity);
-
-        final Date startDate = Date.from(task.getStartDate().atZone(ZoneId.systemDefault()).toInstant());
-        final Date endDate = Date.from(task.getEndDate().atZone(ZoneId.systemDefault()).toInstant());
-        final Trigger trigger = this.createTrigger(task, jobIdentity, startDate, endDate);
-
-        this.scheduler.scheduleJob(job, trigger);
+    @Incoming("tasks")
+    public void scheduleTask(final String taskJson) {
+        final Task task;
+        try {
+            task = this.objectMapper.readValue(taskJson, Task.class);
+            final String jobIdentity = task.getTaskId() + '_' + task.getTitle() + "_job";
+            final JobDetail job = this.createJob(taskJson, jobIdentity);
+            final Date startDate = Date.from(task.getStartDate().atZone(ZoneId.systemDefault()).toInstant());
+            final Date endDate = Date.from(task.getEndDate().atZone(ZoneId.systemDefault()).toInstant());
+            final Trigger trigger = this.createTrigger(task, jobIdentity, startDate, endDate);
+            this.scheduler.scheduleJob(job, trigger);
+        }
+        catch (JsonProcessingException e) {
+            LOGGER.error("Could not deserialize " + taskJson, e);
+        } catch (SchedulerException e) {
+            LOGGER.error("Could not schedule job", e);
+        }
     }
 
     private Trigger createTrigger(final Task task, final String jobIdentity, final Date startDate, final Date endDate) {
