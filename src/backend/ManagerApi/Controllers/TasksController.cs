@@ -107,7 +107,8 @@ namespace ManagerApi.Controllers
             var taskJSON = JsonConvert.SerializeObject(task, new JsonSerializerSettings 
             {
                 ContractResolver = contractResolver,
-                Formatting = Formatting.Indented
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
             });
 
             await SendTaskCreatedEventToAMQP(createdAtAction, taskJSON);
