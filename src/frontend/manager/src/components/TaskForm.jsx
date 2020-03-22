@@ -9,13 +9,19 @@ import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TaskApi from "../services/TaskApi";
-import { frequencyOptions } from "../services/utils";
+import { frequencyOptions, getFrequency } from "../services/utils";
 
-export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
+export default function TaskForm({ task, categoryId, onTaskSaved, onCloseForm }) {
+
+  let loadedFrequency = null;
+  if (task) {
+    loadedFrequency = getFrequency(task.frequency);
+  }
+
   const { register, handleSubmit, errors, reset } = useForm();
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [frequency, setFrequency] = useState(null);
+  const [startDate, setStartDate] = useState(task && task.startDate ? new Date(task.startDate) : null);
+  const [endDate, setEndDate] = useState(task && task.endDate ? new Date(task.endDate) : null);
+  const [frequency, setFrequency] = useState(loadedFrequency);
 
   async function onSubmit(data) {
     try {
@@ -28,12 +34,16 @@ export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
         frequency: frequency ? frequency.value : null
       };
 
+      if (task) {
+        newTask.taskId = parseInt(task.taskId);
+      }
+
       await TaskApi.save(newTask);
       reset();
       setStartDate(null);
       setEndDate(null);
       setFrequency(null);
-      onTaskCreated();
+      onTaskSaved();
     } catch (err) {
       console.error(err);
     }
@@ -42,7 +52,10 @@ export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
   return (
     <Paper className="task-form">
       <form onSubmit={handleSubmit(onSubmit)} className="task-form__body">
-        <div className="task-form__title">Neue Aufgabe anlegen</div>
+        <div className="task-form__title">
+          
+          {task ? `${task.title} bearbeiten` : "Neue Aufgabe anlegen"}
+        </div>
         <TextField
           id="title"
           name="title"
@@ -56,6 +69,7 @@ export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
               : ""
           }
           required
+          defaultValue={task ? task.title : null}
         />
         <TextField
           id="description"
@@ -65,6 +79,7 @@ export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
           inputRef={register()}
           multiline
           rows="6"
+          defaultValue={task ? task.description : null}
         />
 
         <div className="task-form__dates">
@@ -122,7 +137,7 @@ export default function TaskForm({ categoryId, onTaskCreated, onCloseForm }) {
 
         <div className="task-form__footer">
           <Button variant="contained" color="primary" type="submit">
-            Hinzufügen
+            {task ? "Aktualisieren" : "Hinzufügen"}
           </Button>
           <Button variant="outlined" color="default" onClick={onCloseForm}>
             Abbrechen

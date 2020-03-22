@@ -55,12 +55,14 @@ export default function CategoryView({ onTriggerRefresh }) {
     const histroy = useHistory();
     const [activeForm, setActiveForm] = useState(null);
     const [printTask, setPrintTask] = useState(null);
+    const [tempTask, setTempTask] = useState(null);
 
     const [tasks, setTasks] = useState(null);
     const [refreshTrigger, setRefreshTrigger] = useState(new Date());
 
-    function onTaskCreated() {
+    function onTaskSaved() {
         setActiveForm(null);
+        setTempTask(null);
         setRefreshTrigger(new Date());
     }
     
@@ -112,6 +114,11 @@ export default function CategoryView({ onTriggerRefresh }) {
         } catch (err) {
             setError(err);
         }
+    }
+
+    function editTask(task) {
+        setTempTask(task);
+        setActiveForm('task');
     }
     
     return (
@@ -168,8 +175,9 @@ export default function CategoryView({ onTriggerRefresh }) {
 
                     { activeForm === 'task' && (
                         <TaskForm
+                            task={tempTask}
                             categoryId={categoryId}
-                            onTaskCreated={onTaskCreated}
+                            onTaskSaved={onTaskSaved}
                             onCloseForm={() => setActiveForm(null)}
                         />
                     )}
@@ -184,14 +192,14 @@ export default function CategoryView({ onTriggerRefresh }) {
                 </>
             )}
 
-            {tasks && tasks.length > 0 && <TasksTable tasks={tasks} deleteTask={deleteTask} printTask={setPrintTask} />}
+            {tasks && tasks.length > 0 && <TasksTable tasks={tasks} deleteTask={deleteTask} printTask={setPrintTask} editTask={editTask} />}
 
             {printTask && <TaskPrintView task={printTask} category={category} onCloseDialog={() => setPrintTask(null)} />}
         </div>
     )
 }
 
-function TasksTable({ tasks, deleteTask, printTask }) {
+function TasksTable({ tasks, deleteTask, printTask, editTask }) {
     return (
         <TableContainer component={Paper} className="category-view__table">
             <Table>
@@ -217,6 +225,9 @@ function TasksTable({ tasks, deleteTask, printTask }) {
                         <StyledTableCell>
                             <IconButton size="small" onClick={() => printTask(task)}>
                                 <PrintIcon />
+                            </IconButton>
+                            <IconButton size="small" onClick={() => editTask(task)}>
+                                <EditIcon />
                             </IconButton>
                             <IconButton size="small" onClick={() => window.confirm('Aufgabe entfernen?') ? deleteTask(task) : null}>
                                 <DeleteIcon />
