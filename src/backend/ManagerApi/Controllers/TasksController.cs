@@ -16,6 +16,7 @@ using Amqp.Types;
 using Amqp;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace ManagerApi.Controllers
 {
@@ -97,12 +98,15 @@ namespace ManagerApi.Controllers
 
             var createdAtAction = CreatedAtAction("GetTask", new { id = task.TaskId }, task);
 
-            await SendTaskCreatedEventToAMQP(createdAtAction);
+            var taskORM = await _context.Tasks.FindAsync(task.TaskId);
+            var taskJSON = JsonConvert.SerializeObject(taskORM);
+
+            await SendTaskCreatedEventToAMQP(createdAtAction, taskJSON);
 
             return createdAtAction;
         }
 
-        private async System.Threading.Tasks.Task SendTaskCreatedEventToAMQP(CreatedAtActionResult createdAtAction)
+        private async System.Threading.Tasks.Task SendTaskCreatedEventToAMQP(CreatedAtActionResult createdAtAction, string jsonMessage)
         {
             if (createdAtAction.StatusCode == 200
                             || createdAtAction.StatusCode == 201
@@ -118,7 +122,7 @@ namespace ManagerApi.Controllers
                 Address address = new Address(addressConfiguration);
                 Connection connection = await Connection.Factory.CreateAsync(address);
                 Session session = new Session(connection);
-                Message message = new Message(messageForTaskCreatedEventConfiguration);
+                Message message = new Message(jsonMessage);
                 var sender = new SenderLink(session, senderLinkNameConfiguration, senderLinkAddressConfiguration);
                 await sender.SendAsync(message);
             }
