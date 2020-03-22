@@ -33,6 +33,13 @@ namespace ManagerApi
             });
 
             services.AddTransient<DataSeed>();
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +51,8 @@ namespace ManagerApi
             }
 
             seeder.SeedData();
+
+            app.UseCors("MyPolicy");
 
             app.UseOpenApi();
             app.UseSwaggerUi3();

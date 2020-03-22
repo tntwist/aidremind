@@ -17,6 +17,7 @@ using Amqp;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace ManagerApi.Controllers
 {
@@ -98,8 +99,16 @@ namespace ManagerApi.Controllers
 
             var createdAtAction = CreatedAtAction("GetTask", new { id = task.TaskId }, task);
 
-            var taskORM = await _context.Tasks.FindAsync(task.TaskId);
-            var taskJSON = JsonConvert.SerializeObject(taskORM);
+            var contractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            };
+
+            var taskJSON = JsonConvert.SerializeObject(task, new JsonSerializerSettings 
+            {
+                ContractResolver = contractResolver,
+                Formatting = Formatting.Indented
+            });
 
             await SendTaskCreatedEventToAMQP(createdAtAction, taskJSON);
 

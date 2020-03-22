@@ -1,0 +1,158 @@
+{
+  "tasks": [
+    {
+      "title": "Hello world",
+      "description": "this is the first task",
+      "startDate": "2020-03-24T17:15:00.000Z",
+      "endDate": null,
+      "frequency": "* */1 * * *",
+      "id": 1
+    },
+    {
+      "title": "Hello world",
+      "description": "asdasd",
+      "startDate": "2020-03-24T18:21:00.000Z",
+      "endDate": null,
+      "frequency": "* */4 * * *",
+      "id": 2
+    },
+    {
+      "title": "asd",
+      "description": "ad",
+      "startDate": "2020-03-25T18:30:00.000Z",
+      "endDate": null,
+      "frequency": null,
+      "id": 3
+    },
+    {
+      "categoryId": "2",
+      "title": "Test station 2",
+      "description": "",
+      "startDate": null,
+      "endDate": null,
+      "frequency": null,
+      "id": 4
+    },
+    {
+      "categoryId": "4",
+      "title": "Unteraufgabe von station 1.1",
+      "description": "",
+      "startDate": null,
+      "endDate": null,
+      "frequency": null,
+      "id": 5
+    },
+    {
+      "categoryId": "2",
+      "title": "Test station 2 asd",
+      "description": "",
+      "startDate": null,
+      "endDate": null,
+      "frequency": null,
+      "id": 6
+    },
+    {
+      "categoryId": "1",
+      "title": "Aufgabe für Station 1",
+      "description": "Dies ist eine Test",
+      "startDate": "2020-03-23T18:59:00.000Z",
+      "endDate": "2020-03-25T18:59:00.000Z",
+      "frequency": "* */1 * * *",
+      "id": 7
+    },
+    {
+      "categoryId": "14",
+      "title": "Test",
+      "description": "Beschreibung",
+      "startDate": "2020-03-23T20:21:00.000Z",
+      "endDate": null,
+      "frequency": "* */1 * * *",
+      "id": 8
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Station 1",
+      "parentId": null
+    },
+    {
+      "id": 2,
+      "name": "Station 2",
+      "parentId": null
+    },
+    {
+      "id": 3,
+      "name": "Station 3",
+      "parentId": null
+    },
+    {
+      "id": 4,
+      "name": "Station 1.1",
+      "parentId": 1
+    },
+    {
+      "id": 5,
+      "name": "Station 1.2",
+      "parentId": 1
+    },
+    {
+      "id": 6,
+      "name": "Station 1.3",
+      "parentId": 1
+    },
+    {
+      "id": 7,
+      "name": "Station 2.1",
+      "parentId": 2
+    },
+    {
+      "id": 8,
+      "name": "Station 2.2",
+      "parentId": 2
+    },
+    {
+      "id": 9,
+      "name": "Station 3.1",
+      "parentId": 3
+    },
+    {
+      "id": 10,
+      "name": "Station 3.2",
+      "parentId": 3
+    },
+    {
+      "id": 11,
+      "name": "Station 3.3",
+      "parentId": 1
+    },
+    {
+      "id": 12,
+      "name": "Station 4",
+      "parentId": null
+    },
+    {
+      "id": 13,
+      "name": "Station 4.1",
+      "parentId": 12
+    },
+    {
+      "name": "Station 5",
+      "description": "",
+      "parentId": null,
+      "id": 14
+    },
+    {
+      "name": "Station 5.1",
+      "description": "",
+      "parentId": "14",
+      "id": 15
+    },
+    {
+      "name": "asd",
+      "description": "asd",
+      "parentId": "14",
+      "id": 16
+    }
+  ]
+}

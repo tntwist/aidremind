@@ -1,0 +1,15 @@
+.header {
+    background-color: #003af0;
+    padding: 20px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+    color: #fff;
+}
+
+.header__title {
+    font-size: 24px;
+    font-weight: bold;
+}

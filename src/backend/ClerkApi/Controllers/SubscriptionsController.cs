@@ -97,10 +97,12 @@ namespace ClerkApi.Controllers
         {
             _context.Subscriptions.Add(subscription);
 
-            var task = await _context.Tasks.FindAsync(subscription.TaskId);
+            var task = await _context.Tasks.SingleAsync(t => t.TaskId == subscription.TaskId);
             task.AmountOfSubscribers += 1;
 
             await _context.SaveChangesAsync();
+
+            subscription.Task = null;
 
             return CreatedAtAction("GetSubscription", new { id = subscription.SubscriptionId }, subscription);
         }
