@@ -1,7 +1,7 @@
 # ID 024_Reminder_Aidremind #wevsvirus
 
 [WeVsVirus - Der Hackathon der Bundesregierung](https://wirvsvirushackathon.org/)
-![Logo aidremind](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/aidremind_logo_negative.png)
+![Logo aidremind](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/aidremind_big.jpg)
 ![Logo wevsvirus](https://raw.githubusercontent.com/tntwist/reminder-caremind/master/images/wevsvirus_projekt_01_weiss.png)
 
 ## Punchline
