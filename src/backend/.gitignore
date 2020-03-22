@@ -216,4 +216,3 @@ __pycache__/
 
 # Database
 **/aidreminder.db
-!localhost.pfx

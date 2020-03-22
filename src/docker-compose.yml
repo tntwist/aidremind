@@ -1,9 +1,8 @@
 # A docker compose file to start an Artemis AMQP broker
 # more details on https://github.com/vromero/activemq-artemis-docker.
-version: '2'
+version: "3.4"
 
 services:
-
   artemis:
     image: vromero/activemq-artemis:2.8.0-alpine
     ports:
@@ -13,7 +12,7 @@ services:
     environment:
       ARTEMIS_USERNAME: quarkus
       ARTEMIS_PASSWORD: quarkus
-  postgres: 
+  postgres:
     image: postgres:alpine
     container_name: quartz-db
     volumes:
@@ -26,7 +25,30 @@ services:
       - 5432:5432
     networks:
       - scheduler-network
+  clerkapi:
+    container_name: clerk-api
+    image: ${DOCKER_REGISTRY-}clerkapi
+    build:
+      context: .
+      dockerfile: backend/ClerkApi/Dockerfile
+    volumes:
+      - database-volume:/app/App_Data/Database
+    ports:
+      - "8081:80"
+      - "44347:443"
+  managerapi:
+    container_name: manager-api
+    image: ${DOCKER_REGISTRY-}managerapi
+    build:
+      context: .
+      dockerfile: backend/ManagerApi/Dockerfile
+    volumes:
+      - database-volume:/app/App_Data/Database
+    ports:
+      - "8082:80"
+      - "44348:443"
 networks:
   scheduler-network:
 volumes:
   quartz-db:
+  database-volume:
