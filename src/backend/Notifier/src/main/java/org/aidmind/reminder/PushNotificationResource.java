@@ -9,8 +9,6 @@ import org.aidmind.reminder.service.SubscriptionService;
 import org.aidmind.reminder.service.TaskActivityService;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.jms.*;
@@ -26,8 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/subscribe/{userId}")
 public class PushNotificationResource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PushNotificationResource.class);
-
+ 
     Map<Long, Session> sessions = new ConcurrentHashMap<>();
 
     @Inject
@@ -51,13 +48,9 @@ public class PushNotificationResource {
     @Incoming("task-is-due")
     public void notifySubscribers(final String taskJson) throws JsonProcessingException {
         final Task task = this.objectMapper.readValue(taskJson, Task.class);
-        LOGGER.info("CREATE TASK ACTIVITY FOR TASK " + task.getTaskId());
         final TaskActivity taskActivity = this.taskActivityService.create(new TaskActivity(null, task.getTaskId(), null, new Date()));
-        LOGGER.info("CREATED TASK ACTIVITY " + taskActivity.getTaskActivityId());
         final String taskActivityJson = this.objectMapper.writeValueAsString(taskActivity);
-        LOGGER.info("LOAD SUBSCRIPTIONS");
         final List<Subscription> subscriptions = this.subscriptionService.getByTaskId(task.getTaskId());
-        LOGGER.info("LOADED SUBSCRIPTIONS");
         subscriptions.stream().map(Subscription::getUserId).forEach(userId -> {
             this.sessions.get(userId).getAsyncRemote().sendText(taskActivityJson);
         });
