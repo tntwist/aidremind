@@ -48,22 +48,9 @@ namespace ClerkApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using(var httpClient = new HttpClient()) 
-            {
-                bool managerApiIsUp = false;
-                do
-                {
-                    var response = httpClient.GetAsync("http://manager-api:8081/swagger").Result;
-                    managerApiIsUp = response.IsSuccessStatusCode;
-                    if (!managerApiIsUp) 
-                    {
-                        logger.LogInformation("ManagerApi is not up yet. Sleeping 5 secs.");
-                        Thread.Sleep(5000);
-                    }
-                } while (!managerApiIsUp);
-            }
+            WaitForManagerApi();
 
             if (env.IsDevelopment())
             {
@@ -85,6 +72,31 @@ namespace ClerkApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void WaitForManagerApi()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                bool managerApiIsUp = false;
+                do
+                {
+                    try 
+                    {
+                        var response = httpClient.GetAsync("http://manager-api/swagger").Result;
+                        managerApiIsUp = response.IsSuccessStatusCode;
+                    }
+                    catch 
+                    {
+                        managerApiIsUp = false;
+                    }
+
+                    if (!managerApiIsUp)
+                    {
+                        Thread.Sleep(5000);
+                    }
+                } while (!managerApiIsUp);
+            }
         }
     }
 }
