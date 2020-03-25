@@ -39,7 +39,14 @@ services:
     depends_on:
       - schedulerpostgres
       - artemis
-    command: ["./wait-for-postgres.sh", "schedulerpostgres:5432", "--", "python", "app.py"]
+    command:
+      [
+        "./wait-for-postgres.sh",
+        "schedulerpostgres:5432",
+        "--",
+        "python",
+        "app.py",
+      ]
     networks:
       - scheduler-network
       - amqp-network
@@ -69,6 +76,8 @@ services:
     depends_on:
       - apipostgres
       - managerapi
+    command:
+      ["./wait-for-postgres.sh", "apipostgres:5432", "--", "python", "app.py"]
     networks:
       - api-network
 
@@ -82,7 +91,8 @@ services:
       - "8082:80"
     depends_on:
       - apipostgres
-    command: ["./wait-for-postgres.sh", "apipostgres:5432", "--", "python", "app.py"]
+    command:
+      ["./wait-for-postgres.sh", "apipostgres:5432", "--", "python", "app.py"]
     networks:
       - api-network
       - amqp-network

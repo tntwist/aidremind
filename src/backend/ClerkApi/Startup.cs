@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Threading;
 
 namespace ClerkApi
 {
@@ -45,8 +48,23 @@ namespace ClerkApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger logger)
         {
+            using(var httpClient = new HttpClient()) 
+            {
+                bool managerApiIsUp = false;
+                do
+                {
+                    var response = httpClient.GetAsync("http://manager-api:8081/swagger").Result;
+                    managerApiIsUp = response.IsSuccessStatusCode;
+                    if (!managerApiIsUp) 
+                    {
+                        logger.LogInformation("ManagerApi is not up yet. Sleeping 5 secs.");
+                        Thread.Sleep(5000);
+                    }
+                } while (!managerApiIsUp);
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
