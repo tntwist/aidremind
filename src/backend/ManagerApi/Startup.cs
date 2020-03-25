@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EFRepo;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace ManagerApi
 {
@@ -50,6 +51,7 @@ namespace ManagerApi
                 app.UseDeveloperExceptionPage();
             }
 
+            Thread.Sleep(10000);
             seeder.SeedData();
 
             app.UseCors("MyPolicy");
