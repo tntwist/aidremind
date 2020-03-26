@@ -15,5 +15,5 @@ import java.util.List;
 public interface SubscriptionService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Subscription> getByTaskId(@QueryParam("taskId") Integer taskId);
+    List<Subscription> getByTaskId(@QueryParam("TaskId") Integer taskId);
 }

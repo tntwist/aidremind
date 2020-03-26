@@ -17,10 +17,10 @@ public interface TaskActivityService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    TaskActivity getById(@PathParam("taskActivityId") Integer taskActivityId);
+    TaskActivity getById(@PathParam("TaskActivityId") Integer taskActivityId);
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    TaskActivity update(@PathParam("taskActivityId") Integer taskActivityId, TaskActivity taskActivity);
+    TaskActivity update(@PathParam("TaskActivityId") Integer taskActivityId, TaskActivity taskActivity);
 }
