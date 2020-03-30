@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Threading;
 
 namespace ClerkApi
 {
@@ -20,7 +23,11 @@ namespace ClerkApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options => 
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
 
             services.AddDbContext<AidRemindDbContext>(options =>
             {
@@ -43,6 +50,8 @@ namespace ClerkApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            WaitForManagerApi();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -63,6 +72,31 @@ namespace ClerkApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void WaitForManagerApi()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                bool managerApiIsUp = false;
+                do
+                {
+                    try 
+                    {
+                        var response = httpClient.GetAsync("http://manager-api/swagger").Result;
+                        managerApiIsUp = response.IsSuccessStatusCode;
+                    }
+                    catch 
+                    {
+                        managerApiIsUp = false;
+                    }
+
+                    if (!managerApiIsUp)
+                    {
+                        Thread.Sleep(5000);
+                    }
+                } while (!managerApiIsUp);
+            }
         }
     }
 }

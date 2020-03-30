@@ -48,8 +48,6 @@ namespace ClerkApi.Controllers
                 .ToListAsync();
 
             var tasks = subscriptions.Select(s => s.Task).ToList();
-            tasks.ForEach(t => t.Subscriptions = null);
-
 
             var taskActivities = new List<TaskActivity>();
 
@@ -88,7 +86,9 @@ namespace ClerkApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskActivity>> GetTaskActivity(int id)
         {
-            var taskActivity = await _context.TaskActivities.FindAsync(id);
+            var taskActivity = await _context.TaskActivities
+                .Include(t => t.Task)
+                .SingleOrDefaultAsync(t => t.TaskActivityId == id);
 
             if (taskActivity == null)
             {
