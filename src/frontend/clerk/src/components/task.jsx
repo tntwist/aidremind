@@ -1,24 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { tasksService } from "../api/tasks";
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import history from "../services/history";
 import { Link } from "react-router-dom";
+import moment from 'moment';
+import { clerkApi } from "../services/api"
 
 function Task({ match }) {
 
     useEffect(() => {
-        getTask();
+        console.log(match)
+        fetchData(1);
     }, [])
 
-    const getTask = async () => {
-        const task = tasksService.getTask(match.params.id)
-        setTask(task)
+    const fetchData = (taskActivitieId) => {
+        clerkApi.get("/TaskActivities/" + taskActivitieId).then(
+            res => {
+                console.log(res)
+                setTaskActivitie(res.data);
+            }
+        ).catch(err => {
+            console.log(err)
+        })
     }
 
-    const [task, setTask] = useState([]);
+    const [taskActivitie, setTaskActivitie] = useState([]);
+
+    const timeleft = (time) => {
+        return moment(time).fromNow();
+    }
 
     const unsubscribe = () => {
         console.log("unsubscribe")
@@ -28,10 +39,10 @@ function Task({ match }) {
         <div>
             <Box align="left">
                 <Typography gutterBottom variant="h4" color="secondary">
-                    {task.title}
+                    {taskActivitie.title}
                 </Typography>
                 <Typography color="secondary" variant="body1">
-                    {task.description}
+                    {taskActivitie.description}
                 </Typography>
             </Box>
             <div className="taskMenu">

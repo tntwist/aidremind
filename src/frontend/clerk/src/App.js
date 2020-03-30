@@ -12,7 +12,26 @@ import Tasks from "./components/tasks";
 import { BarlowTTF } from "../src/assets/Barlow-Regular.ttf";
 import { FredokaOneTTF } from "../src/assets/FredokaOne-Regular.ttf";
 
+
 function App() {
+
+  const URL = "ws://localhost:8083/subscribe/1"
+
+
+  const ws = new WebSocket(URL)
+
+  ws.onopen = () => {
+    ws.send('Ping');
+  }
+
+  ws.onerror = function (error) {
+    console.log('WebSocket Error ' + error);
+  };
+
+  ws.onmessage = function (e) {
+    console.log('Server: ' + e.data);
+  };
+
 
   const barlow = {
     fontFamily: 'Barlow',
